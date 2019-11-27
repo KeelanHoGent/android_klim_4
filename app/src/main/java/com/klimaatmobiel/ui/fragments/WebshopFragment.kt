@@ -128,16 +128,21 @@ class WebshopFragment : Fragment() {
             }
         })
 
-        var productList = viewModel.group.value!!.project.products
+        /**
+         * This fills the spinner to select a specific category
+         * When an option is selected it will filter the list to only show the selected category
+         */
+
+        val productList = viewModel.group.value!!.project.products
         val cats = productList.map { prod -> prod.category!!.categoryName }.toSortedSet()
-        val catList = listOf<String>("GEEN FILTER") + cats.toList()
+        val catList = listOf("GEEN FILTER") + cats.toList()
 
         val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, catList)
 
 
-        binding.positionSpinner.adapter = dropAdapter
+        binding.categorieSpinner.adapter = dropAdapter
 
-        binding.positionSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        binding.categorieSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
