@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
+import com.klimaatmobiel.domain.enums.SortStatus
+import com.klimaatmobiel.ui.adapters.ProductListAdapter
 import com.squareup.moshi.Json
 import kotlinx.coroutines.*
 import org.json.JSONStringer
@@ -29,6 +31,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     val filteredList: LiveData<List<Product>> get() = _filteredList
     private var filterString = ""
     private var filterCategoryName = ""
+    private var sortStatus = SortStatus.Categorie
 
     private val _navigateToWebshop = MutableLiveData<List<Long>>()
     val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
@@ -86,26 +89,51 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         }
     }
 
-    fun filterListString(c: CharSequence) {
+    fun filterListString(adapter: ProductListAdapter, c: CharSequence) {
         filterString = c.toString().toLowerCase()
-        filterList()
+        filterList(adapter)
     }
 
-    fun filterListCategoryName(s: String) {
+    fun filterListCategoryName(adapter: ProductListAdapter, s: String) {
         filterCategoryName = s
-        filterList()
+        filterList(adapter)
     }
 
-    private fun filterList() {
-        val afterStringFilter = _group.value!!.project.products.filter { product ->
+    private fun filterList(adapter: ProductListAdapter) {
+        //Eerst filteren op string
+        var result = _group.value!!.project.products.filter { product ->
             product.productName.toLowerCase().contains(filterString)
         }
+
+        //Dan filteren op categorie
         if (filterCategoryName.isNotEmpty()) {
-            _filteredList.value = afterStringFilter.filter { product ->
+            result = result.filter { product ->
                 product.category!!.categoryName == filterCategoryName
             }
+        }
+
+        //Daarna sorteren
+        when (sortStatus) {
+            SortStatus.Categorie -> {
+                result = result.sortedBy { p -> p.category!!.categoryName }
+            }
+            SortStatus.Naam -> {
+                result = result.sortedBy { p -> p.productName }
+            }
+            SortStatus.Prijs -> {
+                result = result.sortedBy { p -> p.price }
+            }
+        }
+
+        _filteredList.value = result
+
+        //Nieuwe lijst laten tonen via adapter
+        Timber.i("STATUS: %s", sortStatus)
+        if (sortStatus == SortStatus.Categorie) {
+
+            adapter.addHeaderAndSubmitList(filteredList.value)
         } else {
-            _filteredList.value = afterStringFilter
+            adapter.submitListNoHeaders(filteredList.value)
         }
     }
 
@@ -122,7 +150,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
             }
         }
     }
-
 
     private fun updateOrderItem(oi: OrderItem){
 
@@ -193,6 +220,11 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 Timber.i("productid: ${product.projectId} and ${product.productId}")
             }
         }
+    }
+
+    fun sortList(adapter: ProductListAdapter, sortStatus: SortStatus) {
+        this.sortStatus = sortStatus
+        filterList(adapter)
     }
 
     fun onErrorShown() {

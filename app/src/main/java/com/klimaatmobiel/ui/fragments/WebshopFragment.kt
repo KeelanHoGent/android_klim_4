@@ -27,6 +27,7 @@ import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
+import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
@@ -119,10 +120,9 @@ class WebshopFragment : Fragment() {
                 if(!s.isNullOrEmpty()){
                     // Resubmit the full list and apply the new filter
 //                    adapter.filter.filter(s)
-                    viewModel.filterListString(s)
-                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
+                    viewModel.filterListString(adapter, s)
                 } else {
-                    adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
+                    viewModel.filterListString(adapter, "")
                 }
                 adapter.notifyDataSetChanged()
             }
@@ -137,7 +137,7 @@ class WebshopFragment : Fragment() {
         val cats = productList.map { prod -> prod.category!!.categoryName }.toSortedSet()
         val catList = listOf("GEEN FILTER") + cats.toList()
 
-        val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, catList)
+        val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, catList)
 
 
         binding.categorieSpinner.adapter = dropAdapter
@@ -149,13 +149,36 @@ class WebshopFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (position == 0) {
-                    viewModel.filterListCategoryName("")
-                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
+                    viewModel.filterListCategoryName(adapter, "")
                 } else {
-                    viewModel.filterListCategoryName(parent.getItemAtPosition(position).toString())
-                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
+                    viewModel.filterListCategoryName(adapter, parent.getItemAtPosition(position).toString())
                 }
             }
+        }
+
+        val l = SortStatus.values()
+
+        val sortAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, l)
+
+        binding.sorteerSpinner.adapter = sortAdapter
+
+        binding.sorteerSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                viewModel.sortList(
+                    adapter,
+                    SortStatus.valueOf(parent.getItemAtPosition(position).toString())
+                )
+            }
+
         }
 
         return binding.root

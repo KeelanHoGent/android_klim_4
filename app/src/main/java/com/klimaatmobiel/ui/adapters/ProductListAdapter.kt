@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * Used to tell the [RecyclerView] which items it can reuse to load new data in
@@ -100,6 +101,7 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
      * Add header to the front of the list
      */
     fun addHeaderAndSubmitList(list: List<Product>?) {
+        Timber.i("headers")
         adapterScore.launch {
 
             val sList: MutableList<DataItem> = ArrayList()
@@ -118,6 +120,22 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
 
             withContext(Dispatchers.Main) {
                 submitList(sList)
+                notifyDataSetChanged()
+            }
+        }
+    }
+
+    fun submitListNoHeaders(list: List<Product>?) {
+        adapterScore.launch {
+
+            val result: MutableList<DataItem> = ArrayList()
+
+            list!!.forEach {
+                result.add(DataItem.ProductItem(it))
+            }
+
+            withContext(Dispatchers.Main) {
+                submitList(result)
                 notifyDataSetChanged()
             }
         }
