@@ -128,7 +128,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         _filteredList.value = result
 
         //Nieuwe lijst laten tonen via adapter
-        Timber.i("STATUS: %s", sortStatus)
         if (sortStatus == SortStatus.Categorie) {
 
             adapter.addHeaderAndSubmitList(filteredList.value)

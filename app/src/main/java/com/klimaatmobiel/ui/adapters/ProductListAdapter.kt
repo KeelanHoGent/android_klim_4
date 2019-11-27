@@ -101,7 +101,6 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
      * Add header to the front of the list
      */
     fun addHeaderAndSubmitList(list: List<Product>?) {
-        Timber.i("headers")
         adapterScore.launch {
 
             val sList: MutableList<DataItem> = ArrayList()

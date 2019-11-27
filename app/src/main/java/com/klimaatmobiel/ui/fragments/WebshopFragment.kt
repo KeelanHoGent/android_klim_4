@@ -4,38 +4,23 @@ package com.klimaatmobiel.ui.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
 import com.google.android.material.snackbar.Snackbar
-import com.klimaatmobiel.data.network.KlimaatmobielApi
-import com.klimaatmobiel.domain.Group
-import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
-import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
-import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
-import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
-import kotlinx.android.synthetic.main.fragment_webshop.*
-import timber.log.Timber
-import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -156,9 +141,13 @@ class WebshopFragment : Fragment() {
             }
         }
 
-        val l = SortStatus.values()
+        val arrayOfSortStatus = SortStatus.values()
 
-        val sortAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, l)
+        val sortAdapter = ArrayAdapter(
+            context!!,
+            android.R.layout.simple_spinner_dropdown_item,
+            arrayOfSortStatus
+        )
 
         binding.sorteerSpinner.adapter = sortAdapter
 
