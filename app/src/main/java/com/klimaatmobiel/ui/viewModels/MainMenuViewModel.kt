@@ -19,6 +19,10 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     private val _navigateToWebshop = MutableLiveData<Group>()
     val navigateToWebshop: LiveData<Group> get() = _navigateToWebshop
 
+    private val _navigateToAddGroup = MutableLiveData<Group>()
+    val navigateToAddGroup: LiveData<Group>
+        get() = _navigateToAddGroup
+
     private val _status = MutableLiveData<KlimaatMobielApiStatus>()
     val status: LiveData<KlimaatMobielApiStatus> get() = _status
 

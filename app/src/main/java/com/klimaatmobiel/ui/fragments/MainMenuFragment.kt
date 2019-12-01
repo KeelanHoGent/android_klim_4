@@ -45,12 +45,17 @@ class MainMenuFragment : Fragment() {
 
         binding.mainMenuViewModel = viewModel
 
-        viewModel.navigateToWebshop.observe(this, Observer {
-            if(it != null){
-                findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToBottomNavigationWebshopFragment(it))
-                //viewModel.onWebshopNavigated()
+        viewModel.navigateToAddGroup.observe(this, Observer {
+            if(it != null) {
+                findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToAddGroupFragment3(it))
             }
         })
+//        viewModel.navigateToWebshop.observe(this, Observer {
+//            if(it != null){
+//                findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToBottomNavigationWebshopFragment(it))
+//                //viewModel.onWebshopNavigated()
+//            }
+//        })
 
         viewModel.status.observe(this, Observer {
             when(it) {
