@@ -3,10 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="addGroupViewModel"
+            type="com.klimaatmobiel.ui.viewModels.AddGroupViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <TextView
             android:id="@+id/text_hallo"
@@ -27,7 +32,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="4dp"
             android:ems="10"
-            android:hint="Groepsnaam"
+            android:text="@{addGroupViewModel.group.groupName}"
             android:inputType="textPersonName"
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"

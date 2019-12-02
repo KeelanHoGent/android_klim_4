@@ -45,11 +45,10 @@ class MainMenuFragment : Fragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainMenuViewModel::class.java)
 
         binding.mainMenuViewModel = viewModel
-        Timber.i("on create called")
+
         viewModel.navigateToAddGroup.observe(this, Observer {
 
             if(it != null) {
-
                 findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToAddGroupFragment3(it))
             }
         })
