@@ -16,6 +16,7 @@ data class DatabaseProduct constructor(
     val productImage : String?,
     val projectId : Long,
     val price : Double,
+    val score: Int,
     @Embedded
     val category : Category
 )
@@ -28,6 +29,7 @@ fun DatabaseProduct.asDomainModel(): Product {
             productImage = productImage,
             projectId = projectId,
             price = price,
+            score = score,
             categoryId = category.categoryId,
             category = category)
 }

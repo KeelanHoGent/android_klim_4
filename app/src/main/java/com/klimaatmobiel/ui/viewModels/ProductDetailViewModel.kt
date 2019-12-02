@@ -14,10 +14,13 @@ import timber.log.Timber
 class ProductDetailViewModel(private val repository: KlimaatmobielRepository, private val projectId: Long, private val productId: Long) : ViewModel() {
 
     private var _product = MutableLiveData<Product>()
+
     val product: LiveData<Product> get() = _product
 
     init {
         loadProduct()
+        Timber.i("#####################################################################################################")
+        Timber.i(product.value?.description)
     }
 
     private fun loadProduct() {

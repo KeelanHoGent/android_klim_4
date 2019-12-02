@@ -13,7 +13,7 @@ interface ProductDao {
     fun insertAll(products: List<DatabaseProduct>)
 }
 
-@Database(entities = [DatabaseProduct::class], version = 1, exportSchema = false)
+@Database(entities = [DatabaseProduct::class], version = 2, exportSchema = false)
 abstract class ProductsDatabase : RoomDatabase() {
     abstract val productDao: ProductDao
 }
@@ -25,7 +25,7 @@ fun getDatabase(context: Context): ProductsDatabase {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(context.applicationContext,
                 ProductsDatabase::class.java,
-                "products").build()
+                "products").fallbackToDestructiveMigration().build()
         }
     }
     return INSTANCE
