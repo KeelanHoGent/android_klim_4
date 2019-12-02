@@ -33,7 +33,7 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     }
 
 
-    fun onClickNavigateToWebshop(){
+    fun onClickNavigateToAddGroup(){
 
         // check for empty groupCode
         viewModelScope.launch {
@@ -47,7 +47,7 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
                 // Filter list by categoryname
                 group.project.products.toMutableList().sortBy { it.category!!.categoryName }
 
-                _navigateToWebshop.value = group
+                _navigateToAddGroup.value = group
 
                 repository.refreshProducts(group.project.products)
 
