@@ -43,16 +43,38 @@
             android:id="@+id/recycler_groupmembers"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/button_group_added"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/edit_text_add_pupil"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_group_name"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintVertical_bias="0.0"
             tools:itemCount="4"
             tools:listitem="@layout/list_groupmember_item" />
+
+        <EditText
+            android:id="@+id/edit_text_add_pupil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="voornaam naam"
+            android:inputType="textPersonName"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@+id/button_add_pupil"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/button_add_pupil"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="32dp"
+            android:text="+ Voeg lid toe"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@+id/button_group_added"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button_group_added"
@@ -64,5 +86,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,8 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Pupil(val pupilId: Long,
+class Pupil(val pupilId: Long?,
             val firstName: String,
             val surname: String): Parcelable {
-
 }

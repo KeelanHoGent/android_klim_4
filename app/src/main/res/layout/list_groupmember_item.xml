@@ -22,7 +22,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Naam"
-            android:textSize="36sp"
+            android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

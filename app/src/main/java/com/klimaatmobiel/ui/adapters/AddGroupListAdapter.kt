@@ -22,6 +22,7 @@ class AddGroupListAdapter: ListAdapter<Pupil, AddGroupListAdapter.ViewHolder>(Gr
 
     class ViewHolder private constructor(binding: ListGroupmemberItemBinding): RecyclerView.ViewHolder(binding.root) {
         val pupilName: EditText = binding.inputPupilName
+
         fun bind(item: Pupil) {
             pupilName.setText(item.firstName)
         }
