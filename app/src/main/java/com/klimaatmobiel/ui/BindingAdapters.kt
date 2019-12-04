@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.util.TypedValue
 import android.opengl.Visibility
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -107,6 +109,39 @@ fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
 
         iv.setBackgroundResource(R.drawable.score_bloem)
 
+        parent.addView(iv, lp)
+    }
+
+    for (i in 1..(5-aantalDraws)) {
+        val iv = ImageView(parent.context)
+
+        iv.setBackgroundResource(R.drawable.score_dot)
+
+        parent.addView(iv, lp20)
+    }
+}
+
+@BindingAdapter("klimaatScoreBinding")
+fun klimaatScoreBinding(parent: LinearLayout, score: Double) {
+    parent.removeAllViews()
+
+    val lp20 = LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT)
+
+    lp20.setMargins(10, 0, 10, 0)
+
+    val aantalDraws = (score/2).toInt()
+
+    for (i in 1..aantalDraws) {
+        val iv = ImageView(parent.context)
+        val lp = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT)
+
+        lp.setMargins(8, 0, 8, 0)
+
+        iv.setBackgroundResource(R.drawable.score_bloem)
         parent.addView(iv, lp)
     }
 

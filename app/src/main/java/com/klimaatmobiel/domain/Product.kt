@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Product(val productId : Long, val productName : String, val description : String,
-              val productImage : String?, val projectId : Long, val price : Double,
+              val productImage : String?, val projectId : Long, val price : Double, val score: Int,
               val categoryId : Long, val category : Category?) : Parcelable {
 
 }
@@ -20,6 +20,7 @@ fun List<Product>.asDatabaseModel(): List<DatabaseProduct> {
             it.productImage,
             it.projectId,
             it.price,
+            it.score,
             it.category!!)
     }
 }
