@@ -22,9 +22,11 @@ class AddGroupListAdapter: ListAdapter<Pupil, AddGroupListAdapter.ViewHolder>(Gr
 
     class ViewHolder private constructor(binding: ListGroupmemberItemBinding): RecyclerView.ViewHolder(binding.root) {
         val pupilName: EditText = binding.inputPupilName
+        val pupilfirstName: EditText = binding.inputPupilFirstName
 
         fun bind(item: Pupil) {
-            pupilName.setText(item.firstName)
+            pupilName.setText(item.surname)
+            pupilfirstName.setText(item.firstName)
         }
 
         companion object {

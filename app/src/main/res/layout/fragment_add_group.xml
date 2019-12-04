@@ -32,8 +32,8 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="4dp"
             android:ems="10"
-            android:text="@{addGroupViewModel.group.groupName}"
             android:inputType="textPersonName"
+            android:text="@{addGroupViewModel.group.groupName}"
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,12 +58,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="voornaam naam"
+            android:hint="Voornaam"
             android:inputType="textPersonName"
             android:textSize="32sp"
             app:layout_constraintBottom_toTopOf="@+id/button_add_pupil"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/edit_text_add_pupil_name"
+            app:layout_constraintStart_toStartOf="@+id/recycler_groupmembers" />
 
         <Button
             android:id="@+id/button_add_pupil"
@@ -86,6 +86,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/edit_text_add_pupil_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Naam"
+            android:inputType="textPersonName"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@+id/button_add_pupil"
+            app:layout_constraintEnd_toEndOf="@+id/recycler_groupmembers"
+            app:layout_constraintStart_toEndOf="@+id/edit_text_add_pupil"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_groupmembers" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -60,8 +60,9 @@ class AddGroupFragment : Fragment() {
         binding.addGroupViewModel = viewModel
 
         binding.buttonAddPupil.setOnClickListener({
-            viewModel.onClickedAddPupil(binding.editTextAddPupil.text.toString())
+            viewModel.onClickedAddPupil(binding.editTextAddPupil.text.toString(), binding.editTextAddPupilName.text.toString())
             binding.editTextAddPupil.setText("")
+            binding.editTextAddPupilName.setText("")
         })
 
         return binding.root

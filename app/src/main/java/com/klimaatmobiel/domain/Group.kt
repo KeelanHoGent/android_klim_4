@@ -14,9 +14,8 @@ class Group(val groupId: Long, val groupName: String, val projectId: Double, val
         }
     }
 
-    fun addPupil(pupilName: String) {
-        val pupilNames = pupilName.split(" ")
-        val pupil = Pupil(null, pupilNames[0], pupilNames[1])
+    fun addPupil(pupilFirstName: String, pupilName: String) {
+        val pupil = Pupil(null, pupilFirstName, pupilName)
 
         pupils.add(pupil)
     }

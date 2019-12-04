@@ -23,9 +23,9 @@ class AddGroupViewModel(group: Group, private val repository: KlimaatmobielRepos
         groupName.value = group.groupName
     }
 
-    fun onClickedAddPupil(pupilName: String) {
+    fun onClickedAddPupil(pupilFirstName: String, pupilName: String) {
         viewModelScope.launch {
-            _group.value!!.addPupil(pupilName)
+            _group.value!!.addPupil(pupilFirstName, pupilName)
         }
     }
 }
