@@ -61,5 +61,10 @@
         <argument
             android:name="group"
             app:argType="com.klimaatmobiel.domain.Group" />
+        <action
+            android:id="@+id/action_addGroupFragment3_to_bottomNavigationWebshopFragment"
+            app:destination="@id/bottomNavigationWebshopFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popUpTo="@+id/webshopFragment" />
     </fragment>
 </navigation>

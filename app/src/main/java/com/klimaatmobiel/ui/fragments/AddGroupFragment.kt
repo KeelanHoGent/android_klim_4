@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentAddGroupBinding
 import com.google.android.material.snackbar.Snackbar
@@ -47,7 +48,6 @@ class AddGroupFragment : Fragment() {
         binding.recyclerGroupmembers.adapter = adapter
 
 
-
         viewModel = activity?.run {
             ViewModelProviders.of(this, AddGroupViewModelFactory(group, KlimaatmobielRepository(apiService, getDatabase(context!!.applicationContext))))[AddGroupViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
@@ -57,6 +57,14 @@ class AddGroupFragment : Fragment() {
                 adapter.submitList(it.pupils)
             }
         })
+
+        viewModel.navigateToWebshop.observe(this, Observer {
+
+            if(it != null) {
+                findNavController().navigate(AddGroupFragmentDirections.actionAddGroupFragment3ToBottomNavigationWebshopFragment(it))
+            }
+        })
+
         binding.addGroupViewModel = viewModel
 
         binding.buttonAddPupil.setOnClickListener({
@@ -64,6 +72,8 @@ class AddGroupFragment : Fragment() {
             binding.editTextAddPupil.setText("")
             binding.editTextAddPupilName.setText("")
         })
+
+
 
         return binding.root
     }
