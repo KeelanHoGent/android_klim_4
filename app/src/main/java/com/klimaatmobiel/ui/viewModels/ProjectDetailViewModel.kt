@@ -12,7 +12,7 @@ class ProjectDetailViewModel(private val repository: KlimaatmobielRepository, pr
 
     private var _project = MutableLiveData<Project>()
 
-    val product: LiveData<Project> get() = _project
+    val project: LiveData<Project> get() = _project
 
     init {
         loadProject()

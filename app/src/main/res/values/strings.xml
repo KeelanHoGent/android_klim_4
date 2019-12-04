@@ -22,5 +22,6 @@
     <string name="product_image_description">Product afbeelding</string>
     <string name="project_code_error">Er is iets fout gelopen!</string>
     <string name="loading_webshop_hint">Loading webshop</string>
+    <string name="project_afbeelding_contentdescription">Afbeelding van het project</string>
 
 </resources>

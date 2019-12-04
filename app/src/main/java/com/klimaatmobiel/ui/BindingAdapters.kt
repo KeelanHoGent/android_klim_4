@@ -64,6 +64,14 @@ fun productPriceBinding(txtView: TextView, price: Double) {
     txtView.text = "Prijs: €" + price.toString()
 }
 
+@BindingAdapter("projectMaxBudgetBinding")
+fun projectMaxBudgetBinding(txtView: TextView, budget: Double) {
+    txtView.text = "Budget: €" + budget.toString()
+}
+@BindingAdapter("projectNameBinding")
+fun projectNameBinding(txtView: TextView, name: String?) {
+    txtView.text = name
+}
 
 @BindingAdapter("orderItemAmountBinding")
 fun orderItemAmountBinding(txtView: TextView, amount: Int) {
