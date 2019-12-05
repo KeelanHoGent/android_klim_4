@@ -47,12 +47,6 @@ class MainMenuFragment : Fragment() {
         binding.mainMenuViewModel = viewModel
 
         viewModel.navigateToAddGroup.observe(this, Observer {
-
-            Snackbar.make(
-                activity!!.findViewById(android.R.id.content),
-                it.project.projectName,
-                Snackbar.LENGTH_LONG
-            ).show()
             if(it != null) {
                 findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToAddGroupFragment3(it))
             }

@@ -29,7 +29,7 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
 
     init {
         // For testing purposes
-        groupCode.value = "1abcde"
+        groupCode.value = "212345"
     }
 
 

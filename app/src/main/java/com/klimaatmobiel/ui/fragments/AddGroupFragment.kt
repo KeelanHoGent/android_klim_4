@@ -59,17 +59,7 @@ class AddGroupFragment : Fragment() {
         })
 
         viewModel.navigateToWebshop.observe(this, Observer {
-            Snackbar.make(
-                activity!!.findViewById(android.R.id.content),
-                "navigeert",
-                Snackbar.LENGTH_LONG
-            ).show()
             if(it != null) {
-                Snackbar.make(
-                    activity!!.findViewById(android.R.id.content),
-                    "is niet leeg",
-                    Snackbar.LENGTH_LONG
-                ).show()
                 findNavController().navigate(AddGroupFragmentDirections.actionAddGroupFragment3ToBottomNavigationWebshopFragment(it))
             }
         })
