@@ -4,10 +4,9 @@ package com.klimaatmobiel.ui.fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -45,6 +44,8 @@ class BottomNavigationWebshopFragment : Fragment() {
         (activity as MainActivity).setToolbarTitle("Klimaatmobiel" + " - " + group.groupName + " - " + group.project.projectName)
         (activity as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+
+
         val apiService = KlimaatmobielApi.retrofitService
 
         viewModel = activity?.run {
@@ -53,30 +54,64 @@ class BottomNavigationWebshopFragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.bottomNavigationWebshop.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener {
-            (activity as MainActivity).triggerWebshopBottomNavigation(it)
+            triggerWebshopBottomNavigation(it)
             true
         })
+        //standaard navigatie als app worst opgestart voor de eerste keer
         if(savedInstanceState == null){
             binding.bottomNavigationWebshop.selectedItemId = R.id.nav_webshop
         }
 
         // Navigate to the product detail fragment
-        viewModel.navigateToWebshop.observe(this, Observer {
+        viewModel.navigateToProductDetail.observe(this, Observer {
             if(it != null) {
                 findNavController().navigate(
                     BottomNavigationWebshopFragmentDirections.actionBottomNavigationWebshopFragmentToProductDetailFragment2(
-                        viewModel.navigateToWebshop.value!![0], // ProjectId
-                        viewModel.navigateToWebshop.value!![1]  // ProductId
+                        viewModel.navigateToProductDetail.value!![0], // ProjectId
+                        viewModel.navigateToProductDetail.value!![1]  // ProductId
                     )
                 )
-                viewModel.onDetailNavigated()
+                viewModel.onProductDetailNavigated()
+            }
+        })
+
+        // Navigate to the projectdetail fragment
+        viewModel.navigateToProjectDetail.observe(this, Observer {
+            if(it != null){
+                findNavController().navigate(
+                    BottomNavigationWebshopFragmentDirections.actionBottomNavigationWebshopFragmentToProjectDetailFragment(
+                        viewModel.navigateToProjectDetail.value!! //Projectid
+                    )
+                )
+                viewModel.onProjectDetailNavigated()
+
             }
         })
 
 
-        binding.bottomNavigationWebshop.getOrCreateBadge(R.id.nav_order).number = PusherApplication.aantalProductenInOrder
+
+        //binding.bottomNavigationWebshop. getOrCreateBadge(R.id.nav_order).number = PusherApplication.aantalProductenInOrder
         PusherApplication.aantalProductenInOrder = 8
         return binding.root
+    }
+
+    fun triggerWebshopBottomNavigation(menuItem : MenuItem) {
+        var fragment : Fragment = WebshopFragment()
+        when(menuItem.itemId){
+
+            R.id.nav_order -> {
+                fragment = ShoppingCartFragment()
+                (activity as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.bottom_navigation_container, fragment).commit()
+            }
+            R.id.nav_webshop -> {
+                fragment = WebshopFragment()
+                (activity as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.bottom_navigation_container, fragment).commit()
+            }
+            R.id.projectDetailFragment -> {
+
+            }
+        }
+
     }
 
 }

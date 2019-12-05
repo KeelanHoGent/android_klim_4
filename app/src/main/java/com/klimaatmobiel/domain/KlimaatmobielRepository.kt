@@ -34,7 +34,7 @@ class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, p
     }
     suspend fun getProject(projectId: Long) : Project {
         return withContext(Dispatchers.IO) {
-            database.projectDao.getProduct(projectId).asDomainModel()
+            database.projectDao.getProject(projectId).asDomainModel()
         }
     }
 
