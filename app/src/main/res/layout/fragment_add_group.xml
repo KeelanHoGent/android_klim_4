@@ -55,7 +55,7 @@
 
         <EditText
             android:id="@+id/edit_text_add_pupil"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"
             android:ems="10"
@@ -70,10 +70,11 @@
             android:id="@+id/button_add_pupil"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="+"
-            android:textSize="32sp"
-            android:textColor="@color/white"
             android:background="@color/colorPrimary"
+            android:text="+"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_text_add_pupil_name"
             app:layout_constraintEnd_toEndOf="@+id/recycler_groupmembers"
             app:layout_constraintStart_toEndOf="@+id/edit_text_add_pupil_name"
             app:layout_constraintTop_toTopOf="@+id/edit_text_add_pupil_name" />
@@ -84,7 +85,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@color/colorPrimary"
-            android:onClick="@{() -> addGroupViewModel.onclickedNext()}"
             android:padding="16dp"
             android:text="verder"
             android:textColor="@color/white"
@@ -95,7 +95,7 @@
 
         <EditText
             android:id="@+id/edit_text_add_pupil_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Naam"
