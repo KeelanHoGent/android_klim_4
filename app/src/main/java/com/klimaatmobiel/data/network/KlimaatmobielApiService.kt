@@ -9,10 +9,8 @@ import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import com.klimaatmobiel.domain.Project
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import retrofit2.http.*
 
 // launch backend as http -- line 39 properties "applicationUrl": "http://localhost:5000"

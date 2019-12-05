@@ -2,8 +2,6 @@ package com.klimaatmobiel
 
 import android.app.Application
 import timber.log.Timber
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
 

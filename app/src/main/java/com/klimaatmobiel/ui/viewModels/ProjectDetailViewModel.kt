@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.Project
 import kotlinx.coroutines.launch
-import timber.log.Timber
+
 
 class ProjectDetailViewModel(private val repository: KlimaatmobielRepository, private val projectId: Long) : ViewModel() {
 

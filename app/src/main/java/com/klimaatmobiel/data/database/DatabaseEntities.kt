@@ -2,7 +2,6 @@ package com.klimaatmobiel.data.database
 
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.klimaatmobiel.domain.ApplicationDomain
 import com.klimaatmobiel.domain.Category

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.klimaatmobiel.PusherApplication
-import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus

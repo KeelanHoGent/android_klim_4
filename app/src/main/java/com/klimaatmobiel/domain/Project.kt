@@ -1,7 +1,6 @@
 package com.klimaatmobiel.domain
 
 import android.os.Parcelable
-import com.klimaatmobiel.data.database.DatabaseProduct
 import com.klimaatmobiel.data.database.DatabaseProject
 import kotlinx.android.parcel.Parcelize
 

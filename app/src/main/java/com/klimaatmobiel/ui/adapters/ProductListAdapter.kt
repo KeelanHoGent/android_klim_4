@@ -10,12 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projecten3android.databinding.GridListHeaderBinding
 import com.example.projecten3android.databinding.GridListItemBinding
 import com.klimaatmobiel.domain.Product
-import kotlinx.android.synthetic.main.grid_list_item.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
+
 
 /**
  * Used to tell the [RecyclerView] which items it can reuse to load new data in
