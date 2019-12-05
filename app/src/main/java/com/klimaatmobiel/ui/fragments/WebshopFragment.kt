@@ -4,37 +4,23 @@ package com.klimaatmobiel.ui.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
 import com.google.android.material.snackbar.Snackbar
-import com.klimaatmobiel.data.network.KlimaatmobielApi
-import com.klimaatmobiel.domain.Group
-import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
-import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
-import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
+import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
-import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
-import kotlinx.android.synthetic.main.fragment_webshop.*
-import timber.log.Timber
-import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -120,38 +106,69 @@ class WebshopFragment : Fragment() {
                 if(!s.isNullOrEmpty()){
                     // Resubmit the full list and apply the new filter
 //                    adapter.filter.filter(s)
-                    viewModel.filterListString(s)
-                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
+                    viewModel.filterListString(adapter, s)
                 } else {
-                    adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
+                    viewModel.filterListString(adapter, "")
                 }
                 adapter.notifyDataSetChanged()
             }
         })
 
-        var productList = viewModel.group.value!!.project.products
+        /**
+         * This fills the spinner to select a specific category
+         * When an option is selected it will filter the list to only show the selected category
+         */
+
+        val productList = viewModel.group.value!!.project.products
         val cats = productList.map { prod -> prod.category!!.categoryName }.toSortedSet()
-        val catList = listOf<String>("GEEN FILTER") + cats.toList()
+        val catList = listOf("GEEN FILTER") + cats.toList()
 
-        val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, catList)
+        val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, catList)
 
 
-        binding.positionSpinner.adapter = dropAdapter
+        binding.categorieSpinner.adapter = dropAdapter
 
-        binding.positionSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        binding.categorieSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
 
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (position == 0) {
-                    viewModel.filterListCategoryName("")
-                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
+                    viewModel.filterListCategoryName(adapter, "")
                 } else {
-                    viewModel.filterListCategoryName(parent.getItemAtPosition(position).toString())
-                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
+                    viewModel.filterListCategoryName(adapter, parent.getItemAtPosition(position).toString())
                 }
             }
+        }
+
+        val arrayOfSortStatus = SortStatus.values()
+
+        val sortAdapter = ArrayAdapter(
+            context!!,
+            android.R.layout.simple_spinner_dropdown_item,
+            arrayOfSortStatus
+        )
+
+        binding.sorteerSpinner.adapter = sortAdapter
+
+        binding.sorteerSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                viewModel.sortList(
+                    adapter,
+                    SortStatus.valueOf(parent.getItemAtPosition(position).toString())
+                )
+            }
+
         }
 
         return binding.root
