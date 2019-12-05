@@ -55,13 +55,14 @@
 
         <EditText
             android:id="@+id/edit_text_add_pupil"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
             android:ems="10"
             android:hint="Voornaam"
             android:inputType="textPersonName"
             android:textSize="32sp"
-            app:layout_constraintBottom_toTopOf="@+id/button_add_pupil"
+            app:layout_constraintBottom_toTopOf="@+id/button_group_added"
             app:layout_constraintEnd_toStartOf="@+id/edit_text_add_pupil_name"
             app:layout_constraintStart_toStartOf="@+id/recycler_groupmembers" />
 
@@ -69,37 +70,41 @@
             android:id="@+id/button_add_pupil"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginBottom="32dp"
-            android:text="+ Voeg lid toe"
+            android:text="+"
             android:textSize="32sp"
-            app:layout_constraintBottom_toTopOf="@+id/button_group_added"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/recycler_groupmembers"
+            app:layout_constraintStart_toEndOf="@+id/edit_text_add_pupil_name"
+            app:layout_constraintTop_toTopOf="@+id/edit_text_add_pupil_name" />
 
         <Button
             android:id="@+id/button_group_added"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="verder"
-            android:textSize="32sp"
+            android:background="@color/colorPrimary"
             android:onClick="@{() -> addGroupViewModel.onclickedNext()}"
+            android:padding="16dp"
+            android:text="verder"
+            android:textColor="@color/white"
+            android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/edit_text_add_pupil_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Naam"
             android:inputType="textPersonName"
             android:textSize="32sp"
-            app:layout_constraintBottom_toTopOf="@+id/button_add_pupil"
-            app:layout_constraintEnd_toEndOf="@+id/recycler_groupmembers"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_pupil"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/edit_text_add_pupil"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_groupmembers" />
+            app:layout_constraintTop_toTopOf="@+id/edit_text_add_pupil" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -68,9 +68,19 @@ class AddGroupFragment : Fragment() {
         binding.addGroupViewModel = viewModel
 
         binding.buttonAddPupil.setOnClickListener({
-            viewModel.onClickedAddPupil(binding.editTextAddPupil.text.toString(), binding.editTextAddPupilName.text.toString())
-            binding.editTextAddPupil.setText("")
-            binding.editTextAddPupilName.setText("")
+            try {
+                viewModel.onClickedAddPupil(binding.editTextAddPupil.text.toString(), binding.editTextAddPupilName.text.toString())
+                binding.editTextAddPupil.setText("")
+                binding.editTextAddPupilName.setText("")
+                adapter.notifyDataSetChanged()
+            }catch(e: Exception) {
+                Snackbar.make(
+                    activity!!.findViewById(android.R.id.content),
+                    "naam invullen",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+
         })
 
 

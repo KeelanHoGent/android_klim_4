@@ -33,7 +33,8 @@ class AddGroupViewModel(group: Group, private val repository: KlimaatmobielRepos
     }
 
     fun onClickedAddPupil(pupilFirstName: String, pupilName: String) {
-
+        if(pupilFirstName == "" || pupilName == "")
+            throw Exception()
             _group.value!!.addPupil(pupilFirstName, pupilName)
 
     }
