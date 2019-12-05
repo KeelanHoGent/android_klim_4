@@ -26,5 +26,8 @@
     <string name="nav_title_webshop">Webshop</string>
     <string name="nav_title_project_info">Project info</string>
     <string name="nav_title_winkelmandje">Winkelmandje</string>
+    <string name="budget_titel_text">Budget</string>
+    <string name="toepassingsgebied_text">Toepassingsgebied</string>
+    <string name="beschrijving_text">Beschrijving</string>
 
 </resources>

@@ -41,15 +41,15 @@
 
                     <ImageView
                         android:id="@+id/detail_project_image"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="48dp"
+                        android:layout_width="184dp"
+                        android:layout_height="124dp"
+                        android:layout_marginTop="16dp"
                         android:contentDescription="@string/project_afbeelding_contentdescription"
                         android:scaleType="centerCrop"
                         app:imageUrl="@{project.projectImage}"
                         app:layout_constraintDimensionRatio="H,16:9"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.243"
+                        app:layout_constraintHorizontal_bias="0.214"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_percent=".50" />
@@ -59,19 +59,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:text="@string/budget_titel_text"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.504"
                         app:layout_constraintStart_toEndOf="@+id/detail_project_image"
-                        app:layout_constraintTop_toTopOf="@+id/detail_project_image"
+                        app:layout_constraintTop_toTopOf="@+id/detail_project_image"/>
+
+                    <TextView
+                        android:id="@+id/detail_projectbudget_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/detail_project_image"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_budget_text"
                         app:projectMaxBudgetBinding="@{project.projectBudget}" />
+
+
+                    <!--app:projectApplicationDomainBinding="@{project.applicationDomain.applicationDomainName}" -->
 
                     <TextView
                         android:id="@+id/detail_projectname_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="40dp"
                         android:textSize="30sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -80,15 +96,66 @@
                         app:projectNameBinding="@{project.projectName}" />
 
                     <TextView
-                        android:id="@+id/detail_projectdescription_text"
+                        android:id="@+id/detail_applicationdomain_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="48dp"
+                        android:layout_marginEnd="24dp"
+                        android:text="@string/toepassingsgebied_text"
+                        android:textAlignment="center"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_projectname_text" />
+
+                    <TextView
+                        android:id="@+id/detail_projectapplicationdomain_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@{project.applicationDomain.applicationDomainName}"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.503"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_applicationdomain_text" />
+
+
+                    <TextView
+                        android:id="@+id/detail_description_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="48dp"
+                        android:layout_marginEnd="24dp"
+                        android:text="@string/beschrijving_text"
+                        android:textAlignment="center"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_projectapplicationdomain_text" />
+
+                    <TextView
+                        android:id="@+id/detail_projectdescription_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="24dp"
                         android:text="@{project.projectDescr}"
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/detail_projectname_text" />
+                        app:layout_constraintTop_toBottomOf="@+id/detail_description_text" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
