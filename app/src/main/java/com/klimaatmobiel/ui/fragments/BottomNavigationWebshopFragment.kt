@@ -77,8 +77,6 @@ class BottomNavigationWebshopFragment : Fragment() {
         // Navigate to the projectdetail fragment
         viewModel.navigateToProjectDetail.observe(this, Observer {
             if(it != null){
-                Timber.i("OKOKOKOKOKOKOKOKOKOKOKOKOKOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-                Timber.i(viewModel.navigateToProjectDetail.value!!.toString())
                 findNavController().navigate(
                     BottomNavigationWebshopFragmentDirections.actionBottomNavigationWebshopFragmentToProjectDetailFragment(
                         viewModel.navigateToProjectDetail.value!! //Projectid
@@ -109,7 +107,6 @@ class BottomNavigationWebshopFragment : Fragment() {
                 (activity as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.bottom_navigation_container, fragment).commit()
             }
             R.id.nav_info -> {
-                Timber.i("We got here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 viewModel.onProjectInfoClicked(PusherApplication.huidigProjectId)
             }
         }
