@@ -4,6 +4,7 @@ import com.klimaatmobiel.data.database.WebshopDatabase
 import com.klimaatmobiel.data.database.asDomainModel
 import com.klimaatmobiel.data.network.KlimaatmobielApiService
 import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
+import com.klimaatmobiel.ui.groupSpentBinding
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -48,5 +49,9 @@ class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, p
         withContext(Dispatchers.IO) {
             database.projectDao.insert(project.asDatabaseModel())
         }
+    }
+
+    fun changePupils(group: Group): Deferred<Group> {
+        return apiService.changePupils(group, group.groupId)
     }
 }

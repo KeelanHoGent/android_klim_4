@@ -55,7 +55,8 @@ interface KlimaatmobielApiService {
     @PUT("orderItem/{orderItemId}" )
     fun updateOrderItem(@Body dto : OrderItem, @Path("orderItemId") orderItemId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
 
-
+    @PUT("group/changePupils/{groupId}")
+    fun changePupils(@Body dto: Group, @Path("groupId")groupId: Long): Deferred<Group>
 }
 
 object KlimaatmobielApi {

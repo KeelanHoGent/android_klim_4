@@ -19,6 +19,10 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     private val _navigateToWebshop = MutableLiveData<Group>()
     val navigateToWebshop: LiveData<Group> get() = _navigateToWebshop
 
+    private val _navigateToAddGroup = MutableLiveData<Group>()
+    val navigateToAddGroup: LiveData<Group>
+        get() = _navigateToAddGroup
+
     private val _status = MutableLiveData<KlimaatMobielApiStatus>()
     val status: LiveData<KlimaatMobielApiStatus> get() = _status
 
@@ -29,7 +33,7 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     }
 
 
-    fun onClickNavigateToWebshop(){
+    fun onClickNavigateToAddGroup(){
 
         // check for empty groupCode
         viewModelScope.launch {
@@ -43,7 +47,7 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
                 // Filter list by categoryname
                 group.project.products.toMutableList().sortBy { it.category!!.categoryName }
 
-                _navigateToWebshop.value = group
+                _navigateToAddGroup.value = group
 
                 repository.refreshProject(group.project)
 
