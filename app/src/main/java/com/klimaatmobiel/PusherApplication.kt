@@ -22,6 +22,7 @@ class PusherApplication : Application() {
     }
 
     companion object {
+        var huidigProjectId: Long = -1
         var aantalProductenInOrder: Int = 0
         lateinit var appContext: PusherApplication
             private set

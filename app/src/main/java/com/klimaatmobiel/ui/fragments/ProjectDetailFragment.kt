@@ -28,7 +28,7 @@ class ProjectDetailFragment : Fragment() {
 
 
         val apiService = KlimaatmobielApi.retrofitService
-        val viewModelFactory = ProjectDetailViewModelFactory(KlimaatmobielRepository(apiService, getDatabase(context!!.applicationContext)), ProductDetailFragmentArgs.fromBundle(requireArguments()).projectId )
+        val viewModelFactory = ProjectDetailViewModelFactory(KlimaatmobielRepository(apiService, getDatabase(context!!.applicationContext)), ProjectDetailFragmentArgs.fromBundle(requireArguments()).projectId )
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ProjectDetailViewModel::class.java)
 
         binding.projectDetailViewModel = viewModel

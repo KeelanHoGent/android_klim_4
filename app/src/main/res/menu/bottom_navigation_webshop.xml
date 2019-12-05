@@ -19,4 +19,5 @@
         android:title="@string/nav_title_winkelmandje"
         android:icon="@drawable/ic_shopping_basket_red_24dp">
     </item>
+
 </menu>

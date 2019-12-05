@@ -227,6 +227,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         }
     }
 
+    fun onProjectInfoClicked(projectId: Long){
+        _navigateToProjectDetail.value = projectId
+    }
+
 
     fun sortList(adapter: ProductListAdapter, sortStatus: SortStatus) {
         this.sortStatus = sortStatus
