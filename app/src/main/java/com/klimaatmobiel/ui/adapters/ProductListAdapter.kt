@@ -103,6 +103,7 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
     fun addHeaderAndSubmitList(list: List<Product>?) {
         adapterScore.launch {
 
+            val test = list
             val sList: MutableList<DataItem> = ArrayList()
             var cat = list!![0].category!!.categoryName
             sList.add(DataItem.Header(cat))

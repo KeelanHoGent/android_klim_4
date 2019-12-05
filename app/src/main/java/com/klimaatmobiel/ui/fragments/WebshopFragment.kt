@@ -86,6 +86,7 @@ class WebshopFragment : Fragment() {
          */
         viewModel.group.observe(viewLifecycleOwner, Observer {
             it?.let {
+                val test = it
                 adapter.addHeaderAndSubmitList(it.project.products)
             }
         })

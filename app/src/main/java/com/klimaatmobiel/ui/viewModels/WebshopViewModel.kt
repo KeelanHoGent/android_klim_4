@@ -41,7 +41,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
 
     init {
-        _group.value = group // de groep met het project end de order is hier beschikbaar
+        _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
     }
 

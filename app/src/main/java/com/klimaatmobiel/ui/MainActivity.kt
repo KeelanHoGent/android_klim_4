@@ -10,6 +10,7 @@ import com.example.projecten3android.R
 import com.example.projecten3android.databinding.ActivityMainBinding
 import com.klimaatmobiel.ui.fragments.ShoppingCartFragment
 import com.klimaatmobiel.ui.fragments.WebshopFragment
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
@@ -17,9 +18,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         //setContentView(R.layout.activity_main)
+
     }
 
     fun setToolbarTitle(titleString : String){

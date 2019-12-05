@@ -54,7 +54,7 @@
             android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:onClick="@{() -> mainMenuViewModel.onClickNavigateToWebshop()}"
+            android:onClick="@{() -> mainMenuViewModel.onClickNavigateToAddGroup()}"
             android:text="@string/webshop_button_text"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
