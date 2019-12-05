@@ -33,12 +33,29 @@ class AddGroupViewModel(group: Group, private val repository: KlimaatmobielRepos
     }
 
     fun onClickedAddPupil(pupilFirstName: String, pupilName: String) {
-        viewModelScope.launch {
+
             _group.value!!.addPupil(pupilFirstName, pupilName)
-        }
+
     }
 
     fun onclickedNext() {
-        _navigateToWebshop.value = group.value
+        viewModelScope.launch {
+            val changePupils = repository.changePupils(_group.value!!)
+            try {
+                _status.value = KlimaatMobielApiStatus.LOADING
+                changePupils.await()
+
+                _navigateToWebshop.value = group.value
+
+                _status.value = KlimaatMobielApiStatus.DONE
+
+            } catch (e: HttpException) {
+                Timber.i(e.message())
+                _status.value = KlimaatMobielApiStatus.ERROR
+            } catch (e: Exception) {
+                Timber.i(e)
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+        }
     }
 }
