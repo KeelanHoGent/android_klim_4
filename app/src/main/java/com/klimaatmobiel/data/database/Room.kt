@@ -18,6 +18,9 @@ interface ProjectDao {
     @Query("SELECT * FROM databaseproject WHERE projectId = :projectkey")
     fun getProject(projectkey: Long): DatabaseProject
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(project: DatabaseProject)
+
 }
 
 @Database(entities = [DatabaseProduct::class, DatabaseProject::class], version = 3, exportSchema = false)

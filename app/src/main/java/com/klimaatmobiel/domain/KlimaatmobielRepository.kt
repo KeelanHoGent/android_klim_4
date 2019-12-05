@@ -43,4 +43,10 @@ class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, p
             database.productDao.insertAll(products.asDatabaseModel())
          }
     }
+
+    suspend fun refreshProject(project: Project) {
+        withContext(Dispatchers.IO) {
+            database.projectDao.insert(project.asDatabaseModel())
+        }
+    }
 }
