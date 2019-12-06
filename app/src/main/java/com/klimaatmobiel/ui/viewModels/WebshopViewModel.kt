@@ -8,9 +8,7 @@ import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
-import com.squareup.moshi.Json
 import kotlinx.coroutines.*
-import org.json.JSONStringer
 import retrofit2.HttpException
 import timber.log.Timber
 
@@ -33,8 +31,11 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private var filterCategoryName = ""
     private var sortStatus = SortStatus.Categorie
 
-    private val _navigateToWebshop = MutableLiveData<List<Long>>()
-    val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
+    private val _navigateToProductDetail = MutableLiveData<List<Long>>()
+    val navigateToProductDetail: LiveData<List<Long>> get() = _navigateToProductDetail
+
+    private val _navigateToProjectDetail = MutableLiveData<Long>()
+    val navigateToProjectDetail: LiveData<Long> get() = _navigateToProjectDetail
 
     val testScore = 7.0
 
@@ -45,9 +46,14 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         _filteredList.value = group.project.products
     }
 
-    fun onDetailNavigated() {
-        _navigateToWebshop.value = null
+    fun onProductDetailNavigated() {
+        _navigateToProductDetail.value = null
     }
+
+    fun onProjectDetailNavigated() {
+        _navigateToProjectDetail.value = null
+    }
+
 
     fun addProductToOrder(product: Product){
         viewModelScope.launch {
@@ -215,11 +221,16 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         when(action) {
             0 -> addProductToOrder(product)
             1 -> {
-                _navigateToWebshop.value = listOf(product.projectId, product.productId)
+                _navigateToProductDetail.value = listOf(product.projectId, product.productId)
                 Timber.i("productid: ${product.projectId} and ${product.productId}")
             }
         }
     }
+
+    fun onProjectInfoClicked(projectId: Long){
+        _navigateToProjectDetail.value = projectId
+    }
+
 
     fun sortList(adapter: ProductListAdapter, sortStatus: SortStatus) {
         this.sortStatus = sortStatus

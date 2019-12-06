@@ -1,6 +1,6 @@
 package com.klimaatmobiel.domain
 
-import com.klimaatmobiel.data.database.ProductsDatabase
+import com.klimaatmobiel.data.database.WebshopDatabase
 import com.klimaatmobiel.data.database.asDomainModel
 import com.klimaatmobiel.data.network.KlimaatmobielApiService
 import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
@@ -9,11 +9,12 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, private val database: ProductsDatabase) {
+class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, private val database: WebshopDatabase) {
 
     fun getFullGroup(groupCode: String): Deferred<Group> {
         return apiService.getFullGroup(groupCode)
     }
+
 
     fun addProductToOrder(orderItem: OrderItem, orderId: Long): Deferred<RemoveOrAddedOrderItemDTO> {
         return apiService.addProductToOrder(orderItem, orderId)
@@ -32,10 +33,21 @@ class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, p
             database.productDao.getProduct(projectId, productId).asDomainModel()
         }
     }
+    suspend fun getProject(projectId: Long) : Project {
+        return withContext(Dispatchers.IO) {
+            database.projectDao.getProject(projectId).asDomainModel()
+        }
+    }
 
     suspend fun refreshProducts(products: List<Product>) {
         withContext(Dispatchers.IO) {
             database.productDao.insertAll(products.asDatabaseModel())
+         }
+    }
+
+    suspend fun refreshProject(project: Project) {
+        withContext(Dispatchers.IO) {
+            database.projectDao.insert(project.asDatabaseModel())
         }
     }
 

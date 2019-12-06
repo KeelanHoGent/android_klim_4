@@ -8,10 +8,9 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
-import retrofit2.Call
+import com.klimaatmobiel.domain.Project
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import retrofit2.http.*
 
 // launch backend as http -- line 39 properties "applicationUrl": "http://localhost:5000"
@@ -40,6 +39,9 @@ interface KlimaatmobielApiService {
 
     @GET("project/{projectCode}/products/{productCode}")
     fun getProduct(@Path("projectCode") projectCode: Long, @Path("productCode") productCode: Long): Deferred<Product>
+
+    @GET("project/{projectCode}")
+    fun getProject(@Path("projectCode") projectCode: Long): Deferred<Project>
 
 
     @PUT("order/addOrderItem/{orderId}" )

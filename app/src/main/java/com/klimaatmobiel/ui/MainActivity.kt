@@ -3,9 +3,7 @@ package com.klimaatmobiel.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.ActivityMainBinding
 import com.klimaatmobiel.ui.fragments.ShoppingCartFragment
@@ -32,19 +30,7 @@ class MainActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-    fun triggerWebshopBottomNavigation(menuItem : MenuItem) {
-        var fragment : Fragment = WebshopFragment()
-        when(menuItem.itemId){
-            R.id.nav_order -> {
 
-                fragment = ShoppingCartFragment()
-            }
-            R.id.nav_webshop -> {
-                fragment = WebshopFragment()
-            }
-        }
-        supportFragmentManager.beginTransaction().replace(R.id.bottom_navigation_container, fragment).commit()
-    }
 
     /**
      * Decide if the activity should relaunch (logout current user and reset the app) or to navigate the backstack.

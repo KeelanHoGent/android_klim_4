@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.klimaatmobiel.data.network.KlimaatmobielApi
+import com.klimaatmobiel.PusherApplication
 import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
@@ -49,8 +49,11 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
 
                 _navigateToAddGroup.value = group
 
+                repository.refreshProject(group.project)
+
                 repository.refreshProducts(group.project.products)
 
+                PusherApplication.huidigProjectId = group.projectId
                 _status.value = KlimaatMobielApiStatus.DONE
 
             }catch (e: HttpException) {
