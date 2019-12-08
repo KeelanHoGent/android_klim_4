@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="projectDetailViewModel"
-            type="com.klimaatmobiel.ui.viewModels.ProjectDetailViewModel" />
+            name="webshopViewModel"
+            type="com.klimaatmobiel.ui.viewModels.WebshopViewModel" />
         <variable
             name="project"
             type="com.klimaatmobiel.domain.Project" />

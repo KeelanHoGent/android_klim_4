@@ -73,18 +73,6 @@ class BottomNavigationWebshopFragment : Fragment() {
             }
         })
 
-        // Navigate to the projectdetail fragment
-        viewModel.navigateToProjectDetail.observe(this, Observer {
-            if(it != null){
-                findNavController().navigate(
-                    BottomNavigationWebshopFragmentDirections.actionBottomNavigationWebshopFragmentToProjectDetailFragment(
-                        viewModel.navigateToProjectDetail.value!! //Projectid
-                    )
-                )
-                viewModel.onProjectDetailNavigated()
-
-            }
-        })
 
 
 
@@ -99,16 +87,17 @@ class BottomNavigationWebshopFragment : Fragment() {
 
             R.id.nav_order -> {
                 fragment = ShoppingCartFragment()
-                (activity as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.bottom_navigation_container, fragment).commit()
             }
             R.id.nav_webshop -> {
                 fragment = WebshopFragment()
-                (activity as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.bottom_navigation_container, fragment).commit()
             }
             R.id.nav_info -> {
-                viewModel.onProjectInfoClicked(PusherApplication.huidigProjectId)
+                fragment = ProjectDetailFragment()
+
             }
+
         }
+        (activity as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.bottom_navigation_container, fragment).commit()
 
     }
 
