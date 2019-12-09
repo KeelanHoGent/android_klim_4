@@ -44,7 +44,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     val testScore = 7.0
 
-    private var _aantalNieuweItems: Int = 0
+    private val _aantalNieuweItems = MutableLiveData<Int>()
+    val aantalNieuweItems: LiveData<Int> get() = _aantalNieuweItems
 
 
 
@@ -52,6 +53,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
 
+        setAantal()
         loadProject(group.projectId)
     }
 
@@ -65,13 +67,17 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         }
     }
 
-
-    fun resetAantal(){
-        _aantalNieuweItems = 0
+    private fun setAantal(){
+        _aantalNieuweItems.value = getAantalIemsOrder()
     }
 
-    fun updateAantal(){
-        _aantalNieuweItems++
+    fun resetAantal(){
+        _aantalNieuweItems.value = null
+    }
+
+
+    private fun getAantalIemsOrder(): Int{
+        return _group.value!!.order.orderItems.size
     }
 
 
@@ -104,6 +110,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _group.value = _group.value // trigger live data change, moet wss niet?
 
                 _status.value = KlimaatMobielApiStatus.DONE
+                setAantal()
 
             }catch (e: HttpException) {
                 Timber.i(e.message())
