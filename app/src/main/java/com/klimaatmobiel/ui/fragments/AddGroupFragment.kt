@@ -81,11 +81,6 @@ class AddGroupFragment : Fragment() {
             }
         })
 
-        binding.buttonGroupAdded.setOnClickListener({
-            viewModel.onclickedNext()
-        })
-
-
 
         return binding.root
     }

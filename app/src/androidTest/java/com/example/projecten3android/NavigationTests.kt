@@ -4,7 +4,9 @@ package com.klimaatmobiel.ui
 import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -40,6 +42,7 @@ class NavigationTests {
         val addGroupFragment = onView(withId(R.id.add_group_fragment))
         addGroupFragment.check(matches(isDisplayed()))
 
+        Espresso.closeSoftKeyboard()
         // navigate from add group to webshop
         val webshopButton = onView(withId(R.id.button_group_added))
         webshopButton.perform(click())
