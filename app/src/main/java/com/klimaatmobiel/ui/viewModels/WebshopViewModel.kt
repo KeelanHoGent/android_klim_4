@@ -25,6 +25,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private var _group = MutableLiveData<Group>()
     val group: LiveData<Group> get() = _group
 
+    private var _project = MutableLiveData<Project>()
+
+    val project: LiveData<Project> get() = _project
+
     private var _filteredList = MutableLiveData<List<Product>>()
     val filteredList: LiveData<List<Product>> get() = _filteredList
     private var filterString = ""
@@ -34,8 +38,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private val _navigateToProductDetail = MutableLiveData<List<Long>>()
     val navigateToProductDetail: LiveData<List<Long>> get() = _navigateToProductDetail
 
-    private val _navigateToProjectDetail = MutableLiveData<Long>()
-    val navigateToProjectDetail: LiveData<Long> get() = _navigateToProjectDetail
+
 
     val testScore = 7.0
 
@@ -44,15 +47,19 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     init {
         _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
+        loadProject(group.projectId)
+    }
+
+    private fun loadProject(projectId: Long) {
+        viewModelScope.launch {
+            _project.value = repository.getProject(projectId)
+        }
     }
 
     fun onProductDetailNavigated() {
         _navigateToProductDetail.value = null
     }
 
-    fun onProjectDetailNavigated() {
-        _navigateToProjectDetail.value = null
-    }
 
 
     fun addProductToOrder(product: Product){
@@ -226,11 +233,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
             }
         }
     }
-
-    fun onProjectInfoClicked(projectId: Long){
-        _navigateToProjectDetail.value = projectId
-    }
-
 
     fun sortList(adapter: ProductListAdapter, sortStatus: SortStatus) {
         this.sortStatus = sortStatus
