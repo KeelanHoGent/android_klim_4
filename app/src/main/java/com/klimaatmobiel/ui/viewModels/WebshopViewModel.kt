@@ -38,16 +38,29 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     val testScore = 7.0
 
+    private var _aantalNieuweItems: Int = 0
+
 
 
     init {
         _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
+
     }
 
     fun onDetailNavigated() {
         _navigateToWebshop.value = null
     }
+
+    fun resetAantal(){
+        _aantalNieuweItems = 0
+    }
+
+    fun updateAantal(){
+        _aantalNieuweItems++
+    }
+
+
 
     fun addProductToOrder(product: Product){
         viewModelScope.launch {
