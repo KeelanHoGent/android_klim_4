@@ -2,10 +2,7 @@ package com.klimaatmobiel.ui
 
 import android.graphics.Color
 import android.util.TypedValue
-import android.opengl.Visibility
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -17,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.projecten3android.R
+import com.klimaatmobiel.domain.ApplicationDomain
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
@@ -64,6 +62,26 @@ fun productPriceBinding(txtView: TextView, price: Double) {
     txtView.text = "Prijs: €" + price.toString()
 }
 
+@BindingAdapter("projectMaxBudgetBinding")
+fun projectMaxBudgetBinding(txtView: TextView, budget: Double) {
+    txtView.text = "€" + budget.toString()
+}
+
+@BindingAdapter("projectApplicationDomainBinding")
+fun projectApplicationDomainBinding(txtView: TextView, domain : String) {
+    if(domain == null){
+        txtView.text = "Toepassingsgebied: Onbekend"
+
+    }else{
+        txtView.text = "Toepassingsgebied: " + domain
+
+    }
+}
+
+@BindingAdapter("projectNameBinding")
+fun projectNameBinding(txtView: TextView, name: String?) {
+    txtView.text = name
+}
 
 @BindingAdapter("orderItemAmountBinding")
 fun orderItemAmountBinding(txtView: TextView, amount: Int) {

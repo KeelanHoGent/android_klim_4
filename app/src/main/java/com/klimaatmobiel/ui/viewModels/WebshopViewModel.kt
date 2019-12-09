@@ -27,14 +27,20 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private var _group = MutableLiveData<Group>()
     val group: LiveData<Group> get() = _group
 
+    private var _project = MutableLiveData<Project>()
+
+    val project: LiveData<Project> get() = _project
+
     private var _filteredList = MutableLiveData<List<Product>>()
     val filteredList: LiveData<List<Product>> get() = _filteredList
     private var filterString = ""
     private var filterCategoryName = ""
     private var sortStatus = SortStatus.Categorie
 
-    private val _navigateToWebshop = MutableLiveData<List<Long>>()
-    val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
+
+    private val _navigateToProductDetail = MutableLiveData<List<Long>>()
+    val navigateToProductDetail: LiveData<List<Long>> get() = _navigateToProductDetail
+
 
     val testScore = 7.0
 
@@ -46,11 +52,19 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
 
+        loadProject(group.projectId)
     }
 
-    fun onDetailNavigated() {
-        _navigateToWebshop.value = null
+    fun onProductDetailNavigated() {
+        _navigateToProductDetail.value = null
     }
+
+    private fun loadProject(projectId: Long) {
+        viewModelScope.launch {
+            _project.value = repository.getProject(projectId)
+        }
+    }
+
 
     fun resetAantal(){
         _aantalNieuweItems = 0
@@ -228,7 +242,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         when(action) {
             0 -> addProductToOrder(product)
             1 -> {
-                _navigateToWebshop.value = listOf(product.projectId, product.productId)
+                _navigateToProductDetail.value = listOf(product.projectId, product.productId)
                 Timber.i("productid: ${product.projectId} and ${product.productId}")
             }
         }
