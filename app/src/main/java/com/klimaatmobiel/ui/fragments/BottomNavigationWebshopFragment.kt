@@ -99,10 +99,8 @@ class BottomNavigationWebshopFragment : Fragment() {
 
     fun showBadge(){
         if(viewModel.aantalNieuweItems != null){
-            Timber.i("ja???????????????????????????????????????")
             textCartItemCount.setText(viewModel.aantalNieuweItems.value!!.toString())
             if(!textCartItemCount.isVisible){
-                Timber.i("probeeer")
                 textCartItemCount.visibility = View.VISIBLE
             }
         }else{

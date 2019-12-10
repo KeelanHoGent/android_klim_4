@@ -1,14 +1,18 @@
 package com.klimaatmobiel.ui.viewModels
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projecten3android.R
+import com.google.android.material.snackbar.Snackbar
 import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
 import com.squareup.moshi.Json
+import kotlinx.android.synthetic.main.fragment_bottom_navigation_webshop.*
 import kotlinx.coroutines.*
 import org.json.JSONStringer
 import retrofit2.HttpException
@@ -247,7 +251,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     fun onProductClicked(product: Product, action: Int) {
         when(action) {
-            0 -> addProductToOrder(product)
+            0 -> {
+                addProductToOrder(product)
+
+            }
             1 -> {
                 _navigateToProductDetail.value = listOf(product.projectId, product.productId)
                 Timber.i("productid: ${product.projectId} and ${product.productId}")

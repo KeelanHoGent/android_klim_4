@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -50,7 +51,22 @@ class WebshopFragment : Fragment() {
         val adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
             product, action ->
             run {
+
                 viewModel.onProductClicked(product, action)
+                if(action == 0){
+                    Snackbar.make(
+                        activity!!.findViewById(android.R.id.content),
+                        "Product toegevoegd",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+
+                    // werkt nog niet 
+                    var anim = AnimationUtils.loadAnimation(context, R.anim.enlarge)
+                    var img = activity!!.findViewById<ImageView>(R.id.add_to_cart_image)
+                    img.startAnimation(anim)
+                }
+
+
 
             }
         })
