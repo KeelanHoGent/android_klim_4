@@ -2,6 +2,7 @@ package com.example.projecten3android
 
 import android.os.SystemClock
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions
@@ -9,6 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.klimaatmobiel.ui.MainActivity
+import org.hamcrest.Matchers
 import org.hamcrest.Matchers.*
 import org.hamcrest.core.IsInstanceOf
 import org.junit.Before
@@ -53,12 +55,9 @@ class WebshopTests {
         val textView2 = onView(  allOf(
             withId(R.id.info_text), withText("Plakband")))
 
-
-
         textView1.check(ViewAssertions.matches(withText(startsWith(tobeTyped))))
         textView1.check(ViewAssertions.matches(withText(startsWith(tobeTyped))))
 
     }
-
 
 }
