@@ -38,9 +38,9 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private val _navigateToProductDetail = MutableLiveData<List<Long>>()
     val navigateToProductDetail: LiveData<List<Long>> get() = _navigateToProductDetail
 
+    private val _totaleKlimaatScore = MutableLiveData<Int>()
+    val totaleKlimaatScore: LiveData<Int> get() = _totaleKlimaatScore
 
-
-    val testScore = 7.0
 
 
 
@@ -48,6 +48,13 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
         loadProject(group.projectId)
+    }
+
+    private fun updateKlimaatScore(){
+        val total = group.value?.order!!.orderItems.fold(0){sum, element -> sum + element.amount}
+        _totaleKlimaatScore.value = group.value?.order!!
+            .orderItems
+            .fold(0){sum, element -> sum + (element.amount* element.product!!.score)}/total
     }
 
     private fun loadProject(projectId: Long) {
@@ -64,6 +71,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     fun addProductToOrder(product: Product){
         viewModelScope.launch {
+
 
             val addProductToOrderDeferred = repository.addProductToOrder(OrderItem(0,1,null,product.productId, 0),_group.value!!.order.orderId)
             try {
@@ -88,6 +96,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
+
+                updateKlimaatScore()
 
                 _status.value = KlimaatMobielApiStatus.DONE
 
@@ -161,6 +171,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 updateOrderItem(oi)
             }
         }
+
     }
 
     private fun updateOrderItem(oi: OrderItem){
@@ -182,6 +193,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
+
+                updateKlimaatScore()
 
                 _status.value = KlimaatMobielApiStatus.DONE
 
