@@ -39,7 +39,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     val navigateToProductDetail: LiveData<List<Long>> get() = _navigateToProductDetail
 
 
-
     val testScore = 7.0
 
 
