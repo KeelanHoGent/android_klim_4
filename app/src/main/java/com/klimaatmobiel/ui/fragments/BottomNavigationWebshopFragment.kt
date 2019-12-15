@@ -4,7 +4,6 @@ package com.klimaatmobiel.ui.fragments
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,14 +14,15 @@ import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 import com.example.projecten3android.databinding.FragmentBottomNavigationWebshopBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.klimaatmobiel.PusherApplication
 import com.klimaatmobiel.data.database.getDatabase
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.ui.MainActivity
 import android.widget.TextView
-import androidx.core.view.MenuItemCompat
 import androidx.core.view.isVisible
+import android.view.LayoutInflater
+import androidx.databinding.ViewDataBinding
+import com.google.android.material.badge.BadgeDrawable
 import timber.log.Timber
 
 
@@ -30,9 +30,12 @@ import timber.log.Timber
  * A simple [Fragment] subclass.
  */
 class BottomNavigationWebshopFragment : Fragment() {
-
+    private lateinit var redCircle: FrameLayout;
     private lateinit var viewModel: WebshopViewModel
     private lateinit var textCartItemCount: TextView
+    private lateinit var binding: ViewDataBinding
+
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -79,35 +82,23 @@ class BottomNavigationWebshopFragment : Fragment() {
                 viewModel.onProductDetailNavigated()
             }
         })
-
-        //initialiseren van badge
-
-        val menu = binding.bottomNavigationWebshop.menu
-        val item = menu.findItem(R.id.nav_order)
-        val searchView = item.getActionView() as FrameLayout
-
-        textCartItemCount = searchView.findViewById<TextView>(R.id.cart_badge)
+        binding.bottomNavigationWebshop
 
         viewModel.aantalNieuweItems.observe(this, Observer {
             if(it != null){
-                showBadge()
+
+                updateBadge(binding.bottomNavigationWebshop)
+                Timber.i("ik raak hier")
             }
         })
 
+
         return binding.root
     }
+    fun updateBadge(bottomNavigationWebshop: BottomNavigationView){
+        var aantal = viewModel.getAantalItemsOrder()
+        val badge : BadgeDrawable = bottomNavigationWebshop.getOrCreateBadge(R.id.nav_order)!!.apply { number = aantal}
 
-    fun showBadge(){
-        if(viewModel.aantalNieuweItems != null){
-            textCartItemCount.setText(viewModel.aantalNieuweItems.value!!.toString())
-            if(!textCartItemCount.isVisible){
-                textCartItemCount.visibility = View.VISIBLE
-            }
-        }else{
-            if(textCartItemCount.isVisible){
-                textCartItemCount.visibility = View.GONE
-            }
-        }
     }
 
     fun triggerWebshopBottomNavigation(menuItem : MenuItem) {

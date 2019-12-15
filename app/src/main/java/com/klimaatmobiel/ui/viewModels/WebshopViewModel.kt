@@ -1,20 +1,14 @@
 package com.klimaatmobiel.ui.viewModels
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.projecten3android.R
-import com.google.android.material.snackbar.Snackbar
 import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
-import com.squareup.moshi.Json
-import kotlinx.android.synthetic.main.fragment_bottom_navigation_webshop.*
 import kotlinx.coroutines.*
-import org.json.JSONStringer
 import retrofit2.HttpException
 import timber.log.Timber
 
@@ -72,7 +66,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     }
 
     private fun setAantal(){
-        _aantalNieuweItems.value = getAantalIemsOrder()
+        _aantalNieuweItems.value = getAantalItemsOrder()
     }
 
     fun resetAantal(){
@@ -80,8 +74,9 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     }
 
 
-    private fun getAantalIemsOrder(): Int{
-        return _group.value!!.order.orderItems.size
+    fun getAantalItemsOrder(): Int{
+        return _group.value?.order!!.orderItems.fold(0){sum, element -> sum + element.amount}
+
     }
 
 
