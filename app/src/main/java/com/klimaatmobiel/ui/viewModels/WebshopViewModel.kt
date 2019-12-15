@@ -150,7 +150,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     }
 
     fun changeOrderItemAmount(oi: OrderItem, add: Boolean){
-            if(oi.amount == 1) {
+            if(oi.amount == 1 && !add) {
                 removeOrderItem(oi)
             } else {
                 updateOrderItem(oi, add)
