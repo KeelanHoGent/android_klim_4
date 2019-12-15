@@ -84,7 +84,7 @@ class BottomNavigationWebshopFragment : Fragment() {
         })
         binding.bottomNavigationWebshop
 
-        viewModel.aantalNieuweItems.observe(this, Observer {
+        viewModel.aantalItemsInOrder.observe(this, Observer {
             if(it != null){
 
                 updateBadge(binding.bottomNavigationWebshop)
