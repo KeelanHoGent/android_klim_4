@@ -30,10 +30,7 @@ import timber.log.Timber
  * A simple [Fragment] subclass.
  */
 class BottomNavigationWebshopFragment : Fragment() {
-    private lateinit var redCircle: FrameLayout;
     private lateinit var viewModel: WebshopViewModel
-    private lateinit var textCartItemCount: TextView
-    private lateinit var binding: ViewDataBinding
 
 
 
