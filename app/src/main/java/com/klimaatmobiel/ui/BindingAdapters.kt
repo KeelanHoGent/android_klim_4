@@ -8,19 +8,16 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.net.toUri
-import androidx.core.view.marginLeft
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.projecten3android.R
-import com.klimaatmobiel.domain.ApplicationDomain
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
-import timber.log.Timber
 
 
 @BindingAdapter("listDataProducts")
@@ -117,17 +114,27 @@ fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
 
     val aantalDraws = (score/2).toInt()
 
+    var res: Int = 0
+    when(aantalDraws) {
+        1 -> res = R.drawable.score_bloem_1
+        2 -> res = R.drawable.score_bloem_2
+        3 -> res = R.drawable.score_bloem_3
+        4 -> res = R.drawable.score_bloem_4
+        5 -> res = R.drawable.score_bloem_5
+    }
+
     for (i in 1..aantalDraws) {
-        val iv = ImageView(parent.context)
-        val lp = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT)
+    val iv = ImageView(parent.context)
+    val lp = LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT)
 
-        lp.setMargins(8, 0, 8, 0)
+    lp.setMargins(8, 0, 8, 0)
 
-        iv.setBackgroundResource(R.drawable.score_bloem)
+    iv.setBackgroundResource(res)
 
-        parent.addView(iv, lp)
+
+    parent.addView(iv, lp)
     }
 
     for (i in 1..(5-aantalDraws)) {
@@ -151,6 +158,15 @@ fun klimaatScoreBinding(parent: LinearLayout, score: Double) {
 
     val aantalDraws = (score/2).toInt()
 
+    var res: Int = 0
+    when(aantalDraws) {
+        1 -> res = R.drawable.score_bloem_1
+        2 -> res = R.drawable.score_bloem_2
+        3 -> res = R.drawable.score_bloem_3
+        4 -> res = R.drawable.score_bloem_4
+        5 -> res = R.drawable.score_bloem_5
+    }
+
     for (i in 1..aantalDraws) {
         val iv = ImageView(parent.context)
         val lp = LinearLayout.LayoutParams(
@@ -159,7 +175,7 @@ fun klimaatScoreBinding(parent: LinearLayout, score: Double) {
 
         lp.setMargins(8, 0, 8, 0)
 
-        iv.setBackgroundResource(R.drawable.score_bloem)
+        iv.setBackgroundResource(res)
         parent.addView(iv, lp)
     }
 
