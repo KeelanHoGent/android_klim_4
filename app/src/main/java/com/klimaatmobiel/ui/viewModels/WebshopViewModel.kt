@@ -35,12 +35,12 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private var filterCategoryName = ""
     private var sortStatus = SortStatus.Categorie
 
-
     private val _navigateToProductDetail = MutableLiveData<List<Long>>()
     val navigateToProductDetail: LiveData<List<Long>> get() = _navigateToProductDetail
 
+    private val _totaleKlimaatScore = MutableLiveData<Int>()
+    val totaleKlimaatScore: LiveData<Int> get() = _totaleKlimaatScore
 
-    val testScore = 7.0
 
     private val _aantalItemsInOrder = MutableLiveData<Int>()
     val aantalItemsInOrder: LiveData<Int> get() = _aantalItemsInOrder
@@ -53,6 +53,13 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
         setAantal()
         loadProject(group.projectId)
+    }
+
+    private fun updateKlimaatScore(){
+        val total = group.value?.order!!.orderItems.fold(0){sum, element -> sum + element.amount}
+        _totaleKlimaatScore.value = group.value?.order!!
+            .orderItems
+            .fold(0){sum, element -> sum + (element.amount* element.product!!.score)}/total
     }
 
     fun onProductDetailNavigated() {
@@ -82,6 +89,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     fun addProductToOrder(product: Product){
         viewModelScope.launch {
 
+
             val addProductToOrderDeferred = repository.addProductToOrder(OrderItem(0,1,null,product.productId, 0),_group.value!!.order.orderId)
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
@@ -105,6 +113,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
+
+                updateKlimaatScore()
 
                 _status.value = KlimaatMobielApiStatus.DONE
                 setAantal()
@@ -179,6 +189,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 updateOrderItem(oi)
             }
         }
+
     }
 
     private fun updateOrderItem(oi: OrderItem){
@@ -201,8 +212,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
 
-                _status.value = KlimaatMobielApiStatus.DONE
+                updateKlimaatScore()
                 setAantal()
+                _status.value = KlimaatMobielApiStatus.DONE
+
 
             }catch (e: HttpException) {
                 Timber.i(e.message())
@@ -231,8 +244,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
 
-                _status.value = KlimaatMobielApiStatus.DONE
+                updateKlimaatScore()
                 setAantal()
+                _status.value = KlimaatMobielApiStatus.DONE
+
 
             }catch (e: HttpException) {
                 Timber.i(e.message())
