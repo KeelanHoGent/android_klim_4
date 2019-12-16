@@ -53,8 +53,6 @@ private fun retrofit() = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-
-private val APISERVICE= KlimaatmobielApiService::class
 private const val BASE_URL = "http://10.0.2.2:5000/api/"
 private lateinit var INSTANCE: WebshopDatabase
 val retrofitService: KlimaatmobielApiService by lazy {
