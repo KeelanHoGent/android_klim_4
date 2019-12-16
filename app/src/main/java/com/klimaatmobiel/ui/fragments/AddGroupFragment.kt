@@ -7,22 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentAddGroupBinding
 import com.google.android.material.snackbar.Snackbar
-import com.klimaatmobiel.data.database.getDatabase
-import com.klimaatmobiel.data.network.KlimaatmobielApi
-import com.klimaatmobiel.domain.KlimaatmobielRepository
-import com.klimaatmobiel.domain.Pupil
-import com.klimaatmobiel.ui.ViewModelFactories.AddGroupViewModelFactory
-import com.klimaatmobiel.ui.ViewModelFactories.MainMenuViewModelFactory
-import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
 import com.klimaatmobiel.ui.adapters.AddGroupListAdapter
 import com.klimaatmobiel.ui.viewModels.AddGroupViewModel
-import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
-import com.klimaatmobiel.ui.viewModels.WebshopViewModel
+import org.koin.android.viewmodel.ext.android.getSharedViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -36,9 +26,9 @@ class AddGroupFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val group = AddGroupFragmentArgs.fromBundle(arguments!!).group
+        viewModel = getSharedViewModel()
 
-        val apiService = KlimaatmobielApi.retrofitService
+
 
         val binding = FragmentAddGroupBinding.inflate(inflater)
         binding.lifecycleOwner = this
@@ -48,9 +38,7 @@ class AddGroupFragment : Fragment() {
         binding.recyclerGroupmembers.adapter = adapter
 
 
-        viewModel = activity?.run {
-            ViewModelProviders.of(this, AddGroupViewModelFactory(group, KlimaatmobielRepository(apiService, getDatabase(context!!.applicationContext))))[AddGroupViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
+
 
         viewModel.group.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -66,7 +54,7 @@ class AddGroupFragment : Fragment() {
 
         binding.addGroupViewModel = viewModel
 
-        binding.buttonAddPupil.setOnClickListener({
+        binding.buttonAddPupil.setOnClickListener {
             try {
                 viewModel.onClickedAddPupil(binding.editTextAddPupil.text.toString(), binding.editTextAddPupilName.text.toString())
                 binding.editTextAddPupil.setText("")
@@ -79,11 +67,11 @@ class AddGroupFragment : Fragment() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
-        })
+        }
 
-        binding.buttonGroupAdded.setOnClickListener({
+        binding.buttonGroupAdded.setOnClickListener {
             viewModel.onclickedNext()
-        })
+        }
 
 
 

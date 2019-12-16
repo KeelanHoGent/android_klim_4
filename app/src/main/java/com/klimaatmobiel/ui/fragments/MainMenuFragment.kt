@@ -12,12 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentMainMenuBinding
 import com.google.android.material.snackbar.Snackbar
-import com.klimaatmobiel.data.database.getDatabase
-import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.ui.ViewModelFactories.MainMenuViewModelFactory
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 /**
@@ -25,18 +24,12 @@ import timber.log.Timber
  */
 class MainMenuFragment : Fragment() {
 
-    private lateinit var viewModel: MainMenuViewModel
+    private val viewModel: MainMenuViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val binding = FragmentMainMenuBinding.inflate(inflater)
         binding.lifecycleOwner = this
-
-        val apiService = KlimaatmobielApi.retrofitService
-
-        val viewModelFactory = MainMenuViewModelFactory(KlimaatmobielRepository(apiService, getDatabase(context!!.applicationContext)))
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainMenuViewModel::class.java)
 
         binding.mainMenuViewModel = viewModel
 
@@ -45,12 +38,6 @@ class MainMenuFragment : Fragment() {
                 findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToAddGroupFragment3(it))
             }
         })
-//        viewModel.navigateToWebshop.observe(this, Observer {
-//            if(it != null){
-//                findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToBottomNavigationWebshopFragment(it))
-//                //viewModel.onWebshopNavigated()
-//            }
-//        })
 
         viewModel.status.observe(this, Observer {
             when(it) {

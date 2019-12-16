@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.klimaatmobiel.PusherApplication
 import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
@@ -241,6 +242,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         when(action) {
             0 -> addProductToOrder(product)
             1 -> {
+                PusherApplication.huidigProductId = product.productId
                 _navigateToProductDetail.value = listOf(product.projectId, product.productId)
                 Timber.i("productid: ${product.projectId} and ${product.productId}")
             }

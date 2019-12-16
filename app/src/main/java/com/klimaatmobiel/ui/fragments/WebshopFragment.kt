@@ -21,6 +21,7 @@ import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -28,7 +29,7 @@ import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 class WebshopFragment : Fragment() {
 
 
-    private lateinit var viewModel: WebshopViewModel
+    private val viewModel: WebshopViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -36,9 +37,6 @@ class WebshopFragment : Fragment() {
         val binding = FragmentWebshopBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        viewModel = activity?.run {
-            ViewModelProviders.of(this)[WebshopViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
 
 
         binding.webshopViewModel = viewModel

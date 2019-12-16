@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.projecten3android.databinding.FragmentProjectDetailBinding
-import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class ProjectDetailFragment : Fragment() {
 
-    private lateinit var viewModel: WebshopViewModel
+    private val viewModel: WebshopViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,12 +24,7 @@ class ProjectDetailFragment : Fragment() {
         val binding = FragmentProjectDetailBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        viewModel = activity?.run {
-            ViewModelProviders.of(this)[WebshopViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
 
-
-        val apiService = KlimaatmobielApi.retrofitService
 
 
         binding.webshopViewModel = viewModel
