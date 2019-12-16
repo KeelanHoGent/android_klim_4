@@ -46,6 +46,12 @@ interface KlimaatmobielApiService {
     fun removeOrderItemFromOrder(@Path("orderItemId") orderItemId : Long, @Path("orderId") orderId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
 
 
+    @PUT("orderItem/substractOne/{orderItemId}")
+    fun substractOrderItemByOne(@Body dto: OrderItem, @Path("orderItemId") orderItemId: Long): Deferred<RemoveOrAddedOrderItemDTO>
+
+    @PUT("orderItem/addOne/{orderItemId}")
+    fun addOrderItemByOne(@Body dto: OrderItem, @Path("orderItemId") orderItemId: Long): Deferred<RemoveOrAddedOrderItemDTO>
+
     @PUT("orderItem/{orderItemId}" )
     fun updateOrderItem(@Body dto : OrderItem, @Path("orderItemId") orderItemId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
 

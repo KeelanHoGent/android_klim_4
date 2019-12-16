@@ -24,6 +24,14 @@ class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, p
         return apiService.updateOrderItem(orderItem, orderId)
     }
 
+    fun substractOrderItemByOne(orderItem: OrderItem, orderId: Long): Deferred<RemoveOrAddedOrderItemDTO> {
+        return apiService.substractOrderItemByOne(orderItem, orderId)
+    }
+
+    fun addOrderItemByOne(orderItem: OrderItem, orderId: Long): Deferred<RemoveOrAddedOrderItemDTO> {
+        return apiService.addOrderItemByOne(orderItem, orderId)
+    }
+
     fun removeOrderItemFromOrder(orderItemId: Long, orderId: Long): Deferred<RemoveOrAddedOrderItemDTO> {
         return apiService.removeOrderItemFromOrder(orderItemId, orderId)
     }

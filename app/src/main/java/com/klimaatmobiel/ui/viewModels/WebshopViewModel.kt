@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.klimaatmobiel.PusherApplication
 import com.klimaatmobiel.domain.*
+import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
@@ -41,6 +42,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     private val _totaleKlimaatScore = MutableLiveData<Int>()
     val totaleKlimaatScore: LiveData<Int> get() = _totaleKlimaatScore
+
 
 
 
@@ -161,25 +163,26 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     }
 
     fun changeOrderItemAmount(oi: OrderItem, add: Boolean){
-        if(add){
-            oi.amount++
-            updateOrderItem(oi)
-        } else {
-            oi.amount--
-            if(oi.amount < 1) {
+            if(oi.amount == 1 && !add) {
                 removeOrderItem(oi)
             } else {
-                updateOrderItem(oi)
+                updateOrderItem(oi, add)
             }
-        }
 
     }
 
-    private fun updateOrderItem(oi: OrderItem){
+    private fun updateOrderItem(oi: OrderItem, add:Boolean){
 
         viewModelScope.launch {
 
-            val updateOrderItemDeferred = repository.updateOrderItem(oi, oi.orderItemId)
+            var updateOrderItemDeferred: Deferred<RemoveOrAddedOrderItemDTO>
+            if(add){
+                 updateOrderItemDeferred = repository.addOrderItemByOne(oi, oi.orderItemId)
+            }
+            else {
+                updateOrderItemDeferred = repository.substractOrderItemByOne(oi, oi.orderItemId)
+            }
+
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val orderItemRes = updateOrderItemDeferred.await()
