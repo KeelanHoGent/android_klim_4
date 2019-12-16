@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.klimaatmobiel.domain.*
+import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
@@ -38,9 +39,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private val _navigateToProductDetail = MutableLiveData<List<Long>>()
     val navigateToProductDetail: LiveData<List<Long>> get() = _navigateToProductDetail
 
+    private val _totaleKlimaatScore = MutableLiveData<Int>()
+    val totaleKlimaatScore: LiveData<Int> get() = _totaleKlimaatScore
 
 
-    val testScore = 7.0
 
 
 
@@ -48,6 +50,13 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
         loadProject(group.projectId)
+    }
+
+    private fun updateKlimaatScore(){
+        val total = group.value?.order!!.orderItems.fold(0){sum, element -> sum + element.amount}
+        _totaleKlimaatScore.value = group.value?.order!!
+            .orderItems
+            .fold(0){sum, element -> sum + (element.amount* element.product!!.score)}/total
     }
 
     private fun loadProject(projectId: Long) {
@@ -64,6 +73,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     fun addProductToOrder(product: Product){
         viewModelScope.launch {
+
 
             val addProductToOrderDeferred = repository.addProductToOrder(OrderItem(0,1,null,product.productId, 0),_group.value!!.order.orderId)
             try {
@@ -88,6 +98,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
+
+                updateKlimaatScore()
 
                 _status.value = KlimaatMobielApiStatus.DONE
 
@@ -150,24 +162,26 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     }
 
     fun changeOrderItemAmount(oi: OrderItem, add: Boolean){
-        if(add){
-            oi.amount++
-            updateOrderItem(oi)
-        } else {
-            oi.amount--
-            if(oi.amount < 1) {
+            if(oi.amount == 1 && !add) {
                 removeOrderItem(oi)
             } else {
-                updateOrderItem(oi)
+                updateOrderItem(oi, add)
             }
-        }
+
     }
 
-    private fun updateOrderItem(oi: OrderItem){
+    private fun updateOrderItem(oi: OrderItem, add:Boolean){
 
         viewModelScope.launch {
 
-            val updateOrderItemDeferred = repository.updateOrderItem(oi, oi.orderItemId)
+            var updateOrderItemDeferred: Deferred<RemoveOrAddedOrderItemDTO>
+            if(add){
+                 updateOrderItemDeferred = repository.addOrderItemByOne(oi, oi.orderItemId)
+            }
+            else {
+                updateOrderItemDeferred = repository.substractOrderItemByOne(oi, oi.orderItemId)
+            }
+
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val orderItemRes = updateOrderItemDeferred.await()
@@ -182,6 +196,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
+
+                updateKlimaatScore()
 
                 _status.value = KlimaatMobielApiStatus.DONE
 

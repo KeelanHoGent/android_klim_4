@@ -54,7 +54,7 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/complete_order_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:orderTotalScoreBinding="@{webshopViewModel.testScore}" />
+            app:orderTotalScoreBinding="@{webshopViewModel.totaleKlimaatScore}" />
 
         <TextView
             android:id="@+id/order_cost"

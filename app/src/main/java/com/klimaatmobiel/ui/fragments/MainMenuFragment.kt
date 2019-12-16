@@ -57,7 +57,7 @@ class MainMenuFragment : Fragment() {
                 KlimaatMobielApiStatus.ERROR -> {
                     Snackbar.make(
                         activity!!.findViewById(android.R.id.content),
-                        getString(R.string.project_code_error),
+                        getString(R.string.error_connection),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
