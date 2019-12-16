@@ -8,6 +8,12 @@ import com.example.projecten3android.R
 import com.example.projecten3android.databinding.ActivityMainBinding
 import com.klimaatmobiel.ui.fragments.ShoppingCartFragment
 import com.klimaatmobiel.ui.fragments.WebshopFragment
+import com.klimaatmobiel.ui.viewModels.ProductDetailViewModel
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.GlobalContext.get
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +24,13 @@ class MainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         //setContentView(R.layout.activity_main)
+        startKoin {
+            androidLogger()
+            androidContext(this@MainActivity)
+            modules(appViewModelModule)
+
+
+        }
 
     }
 
