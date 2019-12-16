@@ -82,6 +82,8 @@ class AddGroupFragment : Fragment() {
             }
         }
 
+
+      /*
         binding.buttonGroupAdded.setOnClickListener{
             viewModel.onclickedNext()
         }
@@ -97,7 +99,7 @@ class AddGroupFragment : Fragment() {
                 }
             }
         })
-
+        */
 
         return binding.root
     }
