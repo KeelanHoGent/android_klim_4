@@ -16,6 +16,7 @@ import com.klimaatmobiel.data.database.getDatabase
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.Pupil
+import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.ui.ViewModelFactories.AddGroupViewModelFactory
 import com.klimaatmobiel.ui.ViewModelFactories.MainMenuViewModelFactory
 import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
@@ -66,7 +67,7 @@ class AddGroupFragment : Fragment() {
 
         binding.addGroupViewModel = viewModel
 
-        binding.buttonAddPupil.setOnClickListener({
+        binding.buttonAddPupil.setOnClickListener{
             try {
                 viewModel.onClickedAddPupil(binding.editTextAddPupil.text.toString(), binding.editTextAddPupilName.text.toString())
                 binding.editTextAddPupil.setText("")
@@ -79,13 +80,26 @@ class AddGroupFragment : Fragment() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
-        })
+        }
 
-        binding.buttonGroupAdded.setOnClickListener({
+
+      /*
+        binding.buttonGroupAdded.setOnClickListener{
             viewModel.onclickedNext()
+        }
+
+        viewModel.status.observe(this, Observer {
+            when(it) {
+                KlimaatMobielApiStatus.ERROR -> {
+                    Snackbar.make(
+                        activity!!.findViewById(android.R.id.content),
+                        getString(R.string.error_connection),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
         })
-
-
+        */
 
         return binding.root
     }
