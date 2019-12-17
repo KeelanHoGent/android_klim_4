@@ -64,7 +64,6 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:launchSingleTop="false"
-            app:popEnterAnim="@anim/slide_in_left"
             app:popUpTo="@+id/webshopFragment" />
     </fragment>
     <fragment
