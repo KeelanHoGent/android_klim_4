@@ -52,10 +52,11 @@
         <action
             android:id="@+id/action_bottomNavigationWebshopFragment_to_productDetailFragment2"
             app:destination="@id/productDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/zoom_in"
+            app:exitAnim="@anim/fade_out"
             app:launchSingleTop="false"
-            app:popEnterAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/zoom_out"
             app:popUpTo="@+id/webshopFragment" />
         <action
             android:id="@+id/action_bottomNavigationWebshopFragment_to_projectDetailFragment"
