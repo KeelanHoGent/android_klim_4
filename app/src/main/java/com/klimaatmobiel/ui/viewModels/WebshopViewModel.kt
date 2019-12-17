@@ -1,5 +1,7 @@
 package com.klimaatmobiel.ui.viewModels
 
+import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -90,8 +92,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                     posToRefreshInOrderPreviewListItem = -1
                     _group.value!!.order.orderItems.add(orderItemRes.removedOrAddedOrderItem)
                 }
-
-
 
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
@@ -239,7 +239,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     fun onProductClicked(product: Product, action: Int) {
         when(action) {
-            0 -> addProductToOrder(product)
+            0 -> {
+                //Animations().toggleArrow(view);
+                addProductToOrder(product)
+            }
             1 -> {
                 _navigateToProductDetail.value = listOf(product.projectId, product.productId)
                 Timber.i("productid: ${product.projectId} and ${product.productId}")
