@@ -86,10 +86,10 @@ class BottomNavigationWebshopFragment : Fragment() {
     }
 
     fun triggerWebshopBottomNavigation(menuItem : MenuItem) {
+
         var fragment : Fragment = WebshopFragment()
         if(currentFragment == null) currentFragment = fragment
         val ft = (activity as MainActivity).supportFragmentManager.beginTransaction()
-
 
         when(menuItem.itemId){
 

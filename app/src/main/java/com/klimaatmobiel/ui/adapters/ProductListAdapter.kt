@@ -150,9 +150,9 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
     class ProductViewHolder(private var binding: GridListItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product, clickListener: OnClickListener) {
             binding.product = product
-            binding.addToCartImage.setOnClickListener {
-                Animations().toggleArrow(it)
-            }
+            //binding.addToCartImage.setOnClickListener {
+            //    Animations().toggleArrow(it)
+            //}
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }
