@@ -9,6 +9,7 @@ import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
+import com.klimaatmobiel.ui.fragments.ConfirmDeletionDialogFragment
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import timber.log.Timber
@@ -42,6 +43,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private val _totaleKlimaatScore = MutableLiveData<Int>()
     val totaleKlimaatScore: LiveData<Int> get() = _totaleKlimaatScore
 
+    private val _deleteClicked = MutableLiveData<Boolean>()
+    val deleteClicked: LiveData<Boolean> get() = _deleteClicked
 
 
 
@@ -273,7 +276,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
                 _group.value!!.order.orderItems.removeAll(_group.value!!.order.orderItems)
 
-
+                _deleteClicked.value = false;
                 _status.value = KlimaatMobielApiStatus.DONE
             } catch (e: HttpException) {
                 Timber.i(e.message())
@@ -284,4 +287,13 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
             }
         }
     }
+
+    fun onClickDeleteAll() {
+        _deleteClicked.value = true;
+    }
+
+    fun onDeletedOrCancelled() {
+        _deleteClicked.value = false;
+    }
+
 }

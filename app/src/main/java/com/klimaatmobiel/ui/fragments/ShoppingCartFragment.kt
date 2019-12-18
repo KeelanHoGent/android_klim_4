@@ -11,6 +11,7 @@ import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentShoppingCartBinding
 import com.google.android.material.snackbar.Snackbar
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
+import com.klimaatmobiel.ui.MainActivity
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 
@@ -62,9 +63,19 @@ class ShoppingCartFragment : Fragment() {
             }
         })
 
+        viewModel.deleteClicked.observe(this, Observer {
+            if(it)
+                confirmDeletion()
+        })
+
         return binding.root
 
 
+    }
+
+    fun confirmDeletion() {
+        val deleteDialog = ConfirmDeletionDialogFragment()
+        deleteDialog.show((activity as MainActivity).supportFragmentManager, "Delete")
     }
 
 
