@@ -1,14 +1,11 @@
 package com.klimaatmobiel.data.network
 
-import com.klimaatmobiel.domain.Group
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
-import com.klimaatmobiel.domain.OrderItem
-import com.klimaatmobiel.domain.Product
-import com.klimaatmobiel.domain.Project
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
@@ -57,6 +54,9 @@ interface KlimaatmobielApiService {
 
     @PUT("group/changePupils/{groupId}")
     fun changePupils(@Body dto: Group, @Path("groupId")groupId: Long): Deferred<Group>
+
+    @PUT("order/removeAllOrderItems/{orderId}")
+    fun removeAllOrderItems(@Path("orderId") orderId: Long): Deferred<Order>
 }
 /*
 object KlimaatmobielApi {
