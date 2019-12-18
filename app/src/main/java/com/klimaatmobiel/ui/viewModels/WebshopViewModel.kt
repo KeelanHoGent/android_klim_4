@@ -55,6 +55,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     init {
         _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
+        _totaleKlimaatScore.value = group.order.avgScore.toInt()
 
         setAantal()
         loadProject(group.projectId)
@@ -297,12 +298,13 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
             val removeAllOrdersDefered = repository.removeAllOrderItems(group.value!!.order.orderId)
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
-                removeAllOrdersDefered.await()
+                val newOrder = removeAllOrdersDefered.await()
 
                 _group.value!!.order.orderItems.removeAll(_group.value!!.order.orderItems)
 
                 // trigger verandering in winkelmandje
                 _group.value = _group.value
+                _totaleKlimaatScore.value = 0
 
                 _deleteClicked.value = false;
                 _status.value = KlimaatMobielApiStatus.DONE
