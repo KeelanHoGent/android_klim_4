@@ -63,7 +63,7 @@ class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, p
         return apiService.changePupils(group, group.groupId)
     }
 
-    fun removeAllOrderItems(orderId: Long): Deferred<List<RemoveOrAddedOrderItemDTO>> {
+    fun removeAllOrderItems(orderId: Long): Deferred<RemoveOrAddedOrderItemDTO> {
         return apiService.removeAllOrderItems(orderId)
     }
 }

@@ -266,7 +266,22 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     fun clearShoppingCart() {
         viewModelScope.launch {
-            val removeAllOrdersDeffered = repository.removeAllOrderItems(group.value!!.order.orderId)
+            val removeAllOrdersDefered = repository.removeAllOrderItems(group.value!!.order.orderId)
+            try {
+                _status.value = KlimaatMobielApiStatus.LOADING
+                removeAllOrdersDefered.await()
+
+                _group.value!!.order.orderItems.removeAll(_group.value!!.order.orderItems)
+
+
+                _status.value = KlimaatMobielApiStatus.DONE
+            } catch (e: HttpException) {
+                Timber.i(e.message())
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+            catch (e: Exception) {
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
         }
     }
 }
