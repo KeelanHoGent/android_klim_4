@@ -14,7 +14,6 @@ import com.example.projecten3android.databinding.FragmentMainMenuBinding
 import com.google.android.material.snackbar.Snackbar
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
-import com.klimaatmobiel.ui.ViewModelFactories.MainMenuViewModelFactory
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber

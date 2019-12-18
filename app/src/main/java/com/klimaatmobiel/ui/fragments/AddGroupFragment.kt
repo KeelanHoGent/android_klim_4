@@ -10,8 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.projecten3android.databinding.FragmentAddGroupBinding
 import com.google.android.material.snackbar.Snackbar
-import com.klimaatmobiel.data.database.getDatabase
-import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.Pupil
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
