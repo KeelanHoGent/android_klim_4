@@ -25,6 +25,7 @@ import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -33,7 +34,7 @@ class WebshopFragment : Fragment() {
 
 
 
-    private lateinit var viewModel: WebshopViewModel
+    private val viewModel: WebshopViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -41,9 +42,6 @@ class WebshopFragment : Fragment() {
         val binding = FragmentWebshopBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        viewModel = activity?.run {
-            ViewModelProviders.of(this)[WebshopViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
 
 
         binding.webshopViewModel = viewModel
@@ -60,7 +58,7 @@ class WebshopFragment : Fragment() {
                         Snackbar.LENGTH_SHORT
                     ).show()
 
-                    // werkt nog niet 
+                    // werkt nog niet
                     var anim = AnimationUtils.loadAnimation(context, R.anim.enlarge)
                     var img = activity!!.findViewById<ImageView>(R.id.add_to_cart_image)
                     img.startAnimation(anim)
@@ -82,7 +80,6 @@ class WebshopFragment : Fragment() {
                     viewModel.onErrorShown()
                 }
             }
-
         })
 
         /**
@@ -139,6 +136,7 @@ class WebshopFragment : Fragment() {
             }
         })
 
+
         /**
          * This fills the spinner to select a specific category
          * When an option is selected it will filter the list to only show the selected category
@@ -149,7 +147,6 @@ class WebshopFragment : Fragment() {
         val catList = listOf("GEEN FILTER") + cats.toList()
 
         val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, catList)
-
 
 
         binding.categorieSpinner.adapter = dropAdapter
@@ -198,8 +195,5 @@ class WebshopFragment : Fragment() {
         }
 
         return binding.root
-
     }
-
-
 }

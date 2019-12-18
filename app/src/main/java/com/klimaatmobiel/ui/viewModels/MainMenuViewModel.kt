@@ -43,9 +43,12 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val group = getGroupDeferred.await()
+                PusherApplication.huidigProjectId = group.projectId
+                PusherApplication.group = group
 
                 // Filter list by categoryname
                 group.project.products.toMutableList().sortBy { it.category!!.categoryName }
+
 
                 _navigateToAddGroup.value = group
 
@@ -53,7 +56,7 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
 
                 repository.refreshProducts(group.project.products)
 
-                PusherApplication.huidigProjectId = group.projectId
+
                 _status.value = KlimaatMobielApiStatus.DONE
 
             }catch (e: HttpException) {

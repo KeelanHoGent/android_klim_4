@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_info"
+        android:title="@string/nav_title_project_info"
+        android:icon="@drawable/ic_help_red_24px">
+    </item>
+
     <item
         android:id="@+id/nav_webshop"
         android:title="@string/nav_title_webshop"
         android:checked="true"
         android:icon="@drawable/cart2_red"
         >
-    </item>
-
-    <item
-        android:id="@+id/nav_info"
-        android:title="@string/nav_title_project_info"
-        android:icon="@drawable/ic_help_red_24px">
     </item>
 
     <item
@@ -24,5 +23,3 @@
     </item>
 
 </menu>
-    <!--app:actionLayout="@layout/badge_layout"
-           app:showAsAction="always">-->
