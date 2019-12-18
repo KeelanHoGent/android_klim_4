@@ -306,6 +306,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _group.value = _group.value
                 _totaleKlimaatScore.value = 0
 
+                setAantal()
                 _deleteClicked.value = false;
                 _status.value = KlimaatMobielApiStatus.DONE
             } catch (e: HttpException) {
