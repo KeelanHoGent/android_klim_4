@@ -1,18 +1,24 @@
 package com.klimaatmobiel.ui.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projecten3android.R
 import com.example.projecten3android.databinding.GridListHeaderBinding
 import com.example.projecten3android.databinding.GridListItemBinding
 import com.klimaatmobiel.domain.Animations
 import com.klimaatmobiel.domain.Product
+import com.klimaatmobiel.ui.bindImage
+import kotlinx.android.synthetic.main.grid_list_item.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +35,8 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
 
     private val adapterScore = CoroutineScope(Dispatchers.Default)
 
+
+    public lateinit var animEnlarge: Animation
     /**
      * Filters only the list of [Product] and resubmits the list
      */
@@ -56,8 +64,12 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
 
         }
     }
+    fun makeAnim(context: Context){
+        animEnlarge = AnimationUtils.loadAnimation(context, R.anim.enlarge)
+    }
 
     companion object DiffCallback : DiffUtil.ItemCallback<DataItem>() {
+
         override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
             return oldItem.id == newItem.id
         }
@@ -144,7 +156,10 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
     }
 
     class OnClickListener(val clickListener: (product: Product, action: Int) -> Unit) {
-        fun onClick(product: Product, action: Int) = clickListener(product, action)
+        fun onClick(product: Product, action: Int) {
+            clickListener(product, action)
+            //img.startAnimation(ProductListAdapter.animEnlarge)
+        }
     }
 
     class ProductViewHolder(private var binding: GridListItemBinding): RecyclerView.ViewHolder(binding.root) {
@@ -180,6 +195,9 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
             }
         }
     }
+
+
+
 }
 
 sealed class DataItem {
