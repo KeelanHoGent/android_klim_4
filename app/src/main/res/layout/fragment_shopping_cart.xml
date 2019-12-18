@@ -74,9 +74,29 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:id="@+id/complete_order_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="?attr/colorButtonNormal"
             android:text="@string/complete_order"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_empty_shopping_cart" />
+
+        <Button
+            android:id="@+id/btn_empty_shopping_cart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/colorPrimary"
+            android:padding="5dp"
+            android:text="leeg karretje"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/complete_order_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
