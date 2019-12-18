@@ -136,6 +136,7 @@ class WebshopFragment : Fragment() {
             }
         })
 
+
         /**
          * This fills the spinner to select a specific category
          * When an option is selected it will filter the list to only show the selected category

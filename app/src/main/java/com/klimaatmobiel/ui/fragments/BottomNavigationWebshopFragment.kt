@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 
@@ -25,6 +26,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 class BottomNavigationWebshopFragment : Fragment() {
     private val viewModel: WebshopViewModel by sharedViewModel()
 
+    private var currentFragment: Fragment? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -67,7 +69,6 @@ class BottomNavigationWebshopFragment : Fragment() {
             if(it != null){
 
                 updateBadge(binding.bottomNavigationWebshop)
-                Timber.i("ik raak hier")
             }
         })
 
@@ -82,21 +83,32 @@ class BottomNavigationWebshopFragment : Fragment() {
 
     fun triggerWebshopBottomNavigation(menuItem : MenuItem) {
         var fragment : Fragment = WebshopFragment()
+        if(currentFragment == null) currentFragment = fragment
+        val ft = (activity as MainActivity).supportFragmentManager.beginTransaction()
+
         when(menuItem.itemId){
 
             R.id.nav_order -> {
                 fragment = ShoppingCartFragment()
+                ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left)
             }
             R.id.nav_webshop -> {
                 fragment = WebshopFragment()
+                if(currentFragment is ShoppingCartFragment)
+                    ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right)
+                else if(currentFragment is ProjectDetailFragment)
+                    ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left)
+
             }
             R.id.nav_info -> {
                 fragment = ProjectDetailFragment()
+                ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right)
 
             }
 
         }
-        (activity as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.bottom_navigation_container, fragment).commit()
+        currentFragment = fragment;
+        ft.replace(R.id.bottom_navigation_container, fragment).commit()
 
     }
 

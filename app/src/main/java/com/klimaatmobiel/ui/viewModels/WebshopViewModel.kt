@@ -1,5 +1,7 @@
 package com.klimaatmobiel.ui.viewModels
 
+import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -111,8 +113,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                     _group.value!!.order.orderItems.add(orderItemRes.removedOrAddedOrderItem)
                 }
 
-
-
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
@@ -220,7 +220,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 setAantal()
                 _status.value = KlimaatMobielApiStatus.DONE
 
-
             }catch (e: HttpException) {
                 Timber.i(e.message())
                 _status.value = KlimaatMobielApiStatus.ERROR
@@ -252,7 +251,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 setAantal()
                 _status.value = KlimaatMobielApiStatus.DONE
 
-
             }catch (e: HttpException) {
                 Timber.i(e.message())
                 _status.value = KlimaatMobielApiStatus.ERROR
@@ -266,8 +264,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     fun onProductClicked(product: Product, action: Int) {
         when(action) {
             0 -> {
+                //Animations().toggleArrow(view);
                 addProductToOrder(product)
-
             }
             1 -> {
                 PusherApplication.huidigProductId = product.productId
