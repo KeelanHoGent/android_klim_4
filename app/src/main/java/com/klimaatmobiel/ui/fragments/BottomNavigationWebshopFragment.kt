@@ -12,15 +12,8 @@ import com.example.projecten3android.R
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 import com.example.projecten3android.databinding.FragmentBottomNavigationWebshopBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.klimaatmobiel.data.database.getDatabase
-import com.klimaatmobiel.data.network.KlimaatmobielApi
-import com.klimaatmobiel.domain.KlimaatmobielRepository
-import com.klimaatmobiel.PusherApplication
 import com.klimaatmobiel.ui.MainActivity
-import android.widget.TextView
-import androidx.core.view.isVisible
 import android.view.LayoutInflater
-import androidx.databinding.ViewDataBinding
 import com.google.android.material.badge.BadgeDrawable
 import timber.log.Timber
 import org.koin.android.viewmodel.ext.android.sharedViewModel
