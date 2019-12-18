@@ -21,6 +21,15 @@
     <string name="add_to_cart_description">Voeg het item toe aan de winkelmand</string>
     <string name="product_image_description">Product afbeelding</string>
     <string name="project_code_error">Er is iets fout gelopen!</string>
+    <string name="error_connection">Er is geen internet! Probeer later opnieuw!</string>
     <string name="loading_webshop_hint">Loading webshop</string>
+    <string name="project_afbeelding_contentdescription">Afbeelding van het project</string>
+    <string name="nav_title_webshop">Webshop</string>
+    <string name="nav_title_project_info">Project info</string>
+    <string name="nav_title_winkelmandje">Winkelmandje</string>
+    <string name="budget_titel_text">Budget</string>
+    <string name="toepassingsgebied_text">Toepassingsgebied</string>
+    <string name="beschrijving_text">Beschrijving</string>
+    <string name="leeg_karretje">leeg karretje</string>
 
 </resources>

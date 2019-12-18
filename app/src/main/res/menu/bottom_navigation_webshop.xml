@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_info"
+        android:title="@string/nav_title_project_info"
+        android:icon="@drawable/ic_help_red_24px">
+    </item>
+
     <item
         android:id="@+id/nav_webshop"
-        android:title="Webshop"
+        android:title="@string/nav_title_webshop"
         android:checked="true"
         android:icon="@drawable/cart2_red"
         >
@@ -10,7 +17,9 @@
 
     <item
         android:id="@+id/nav_order"
-        android:title="Winkelmandje"
-        android:icon="@drawable/ic_shopping_basket_red_24dp">
+        android:title="@string/nav_title_winkelmandje"
+        android:icon="@drawable/ic_help_red_24px">
+
     </item>
+
 </menu>

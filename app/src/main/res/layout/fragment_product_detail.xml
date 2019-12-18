@@ -43,14 +43,15 @@
                             android:id="@+id/detail_product_image"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_marginTop="50dp"
+                            android:layout_marginTop="48dp"
                             android:scaleType="centerCrop"
-                            app:layout_constraintDimensionRatio="H,16:9"
                             app:imageUrl="@{product.productImage}"
+                            app:layout_constraintDimensionRatio="H,16:9"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.243"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent=".50"/>
+                            app:layout_constraintWidth_percent=".50" />
 
                         <TextView
                             android:id="@+id/detail_price_text"
@@ -59,32 +60,46 @@
                             android:layout_marginTop="8dp"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@id/detail_product_image"
-                            app:layout_constraintTop_toBottomOf="@+id/detail_name_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.504"
+                            app:layout_constraintStart_toEndOf="@+id/detail_product_image"
+                            app:layout_constraintTop_toTopOf="@+id/detail_product_image"
                             app:productPriceBinding="@{product.price}" />
 
                         <TextView
                             android:id="@+id/detail_name_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="16dp"
                             android:textSize="30sp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/detail_price_text"
-                            app:layout_constraintStart_toStartOf="@id/detail_product_image"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/detail_product_image"
                             app:productNameAndCategoryBinding="@{product}" />
 
                         <TextView
                             android:id="@+id/detail_description_text"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:textSize="20sp"
+                            android:layout_marginTop="32dp"
                             android:text="@{product.description}"
-                            app:layout_constraintStart_toStartOf="@id/detail_product_image"
-                            app:layout_constraintEnd_toEndOf="@id/detail_product_image"
-                            app:layout_constraintTop_toBottomOf="@+id/detail_price_text"/>
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/detail_name_text" />
+
+                        <LinearLayout
+                            android:id="@+id/klimaatscoreproduct_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:klimaatScoreBinding="@{product.score}"
+                            app:layout_constraintBottom_toBottomOf="@+id/detail_product_image"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/detail_product_image"
+                            app:layout_constraintTop_toBottomOf="@+id/detail_price_text" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     </ScrollView>
                 </com.google.android.material.card.MaterialCardView>

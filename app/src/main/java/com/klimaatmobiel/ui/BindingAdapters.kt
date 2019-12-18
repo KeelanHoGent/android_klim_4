@@ -1,9 +1,11 @@
 package com.klimaatmobiel.ui
 
-import android.opengl.Visibility
+import android.graphics.Color
+import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -11,13 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.projecten3android.R
-import com.klimaatmobiel.domain.Order
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
-import timber.log.Timber
 
 
 @BindingAdapter("listDataProducts")
@@ -59,6 +59,26 @@ fun productPriceBinding(txtView: TextView, price: Double) {
     txtView.text = "Prijs: €" + price.toString()
 }
 
+@BindingAdapter("projectMaxBudgetBinding")
+fun projectMaxBudgetBinding(txtView: TextView, budget: Double) {
+    txtView.text = "€" + budget.toString()
+}
+
+@BindingAdapter("projectApplicationDomainBinding")
+fun projectApplicationDomainBinding(txtView: TextView, domain : String) {
+    if(domain == null){
+        txtView.text = "Toepassingsgebied: Onbekend"
+
+    }else{
+        txtView.text = "Toepassingsgebied: " + domain
+
+    }
+}
+
+@BindingAdapter("projectNameBinding")
+fun projectNameBinding(txtView: TextView, name: String?) {
+    txtView.text = name
+}
 
 @BindingAdapter("orderItemAmountBinding")
 fun orderItemAmountBinding(txtView: TextView, amount: Int) {
@@ -73,6 +93,99 @@ fun btnCheckoutOrderBinding(btn: Button, totalPrice: Double) {
 @BindingAdapter("orderItemTotalPriceBinding")
 fun orderItemTotalPriceBinding(txtView: TextView, oi: OrderItem) {
     txtView.text = "€" + (oi.amount * oi.product!!.price).toString()
+}
+
+@BindingAdapter("orderTotalScoreBinding")
+fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
+    parent.removeAllViews()
+
+    val lp20 = LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT)
+
+    lp20.setMargins(20, 0, 20, 0)
+
+    val tv = TextView(parent.context)
+    tv.text = ("Klimaatscore: ")
+    tv.setTextColor(Color.parseColor("#C3004A"))
+    tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,40.toFloat())
+
+    parent.addView(tv)
+
+    val aantalDraws = (score/2).toInt()
+
+    var res: Int = 0
+    when(aantalDraws) {
+        1 -> res = R.drawable.score_bloem_1
+        2 -> res = R.drawable.score_bloem_2
+        3 -> res = R.drawable.score_bloem_3
+        4 -> res = R.drawable.score_bloem_4
+        5 -> res = R.drawable.score_bloem_5
+    }
+
+    for (i in 1..aantalDraws) {
+    val iv = ImageView(parent.context)
+    val lp = LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT)
+
+    lp.setMargins(8, 0, 8, 0)
+
+    iv.setBackgroundResource(res)
+
+
+    parent.addView(iv, lp)
+    }
+
+    for (i in 1..(5-aantalDraws)) {
+        val iv = ImageView(parent.context)
+
+        iv.setBackgroundResource(R.drawable.score_dot)
+
+        parent.addView(iv, lp20)
+    }
+}
+
+@BindingAdapter("klimaatScoreBinding")
+fun klimaatScoreBinding(parent: LinearLayout, score: Double) {
+    parent.removeAllViews()
+
+    val lp20 = LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT)
+
+    lp20.setMargins(10, 0, 10, 0)
+
+    val aantalDraws = (score/2).toInt()
+
+    var res: Int = 0
+    when(aantalDraws) {
+        1 -> res = R.drawable.score_bloem_1
+        2 -> res = R.drawable.score_bloem_2
+        3 -> res = R.drawable.score_bloem_3
+        4 -> res = R.drawable.score_bloem_4
+        5 -> res = R.drawable.score_bloem_5
+    }
+
+    for (i in 1..aantalDraws) {
+        val iv = ImageView(parent.context)
+        val lp = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT)
+
+        lp.setMargins(8, 0, 8, 0)
+
+        iv.setBackgroundResource(res)
+        parent.addView(iv, lp)
+    }
+
+    for (i in 1..(5-aantalDraws)) {
+        val iv = ImageView(parent.context)
+
+        iv.setBackgroundResource(R.drawable.score_dot)
+
+        parent.addView(iv, lp20)
+    }
 }
 
 /**

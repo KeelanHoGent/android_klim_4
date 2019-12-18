@@ -64,6 +64,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+
+
     // Room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
@@ -76,8 +81,12 @@ dependencies {
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
+    // Koin
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
     // Material design
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // Glide
@@ -90,7 +99,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
     //testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "androidx.arch.core:core-testing:$version_lifecycle_extensions" // For InstantTaskExecutorRule to test LiveData
+    testImplementation "androidx.arch.core:core-testing:$version_lifecycle_extensions"
+    // For InstantTaskExecutorRule to test LiveData
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
 
 }

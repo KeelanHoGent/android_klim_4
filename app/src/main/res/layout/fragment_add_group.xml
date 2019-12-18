@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="addGroupViewModel"
+            type="com.klimaatmobiel.ui.viewModels.AddGroupViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/add_group_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <TextView
+            android:id="@+id/text_hallo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Hallo!"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/text_group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="4dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@{addGroupViewModel.group.groupName}"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_hallo" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_groupmembers"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/edit_text_add_pupil"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_group_name"
+            app:layout_constraintVertical_bias="0.0"
+            tools:itemCount="4"
+            tools:listitem="@layout/list_groupmember_item" />
+
+        <EditText
+            android:id="@+id/edit_text_add_pupil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
+            android:ems="10"
+            android:hint="Voornaam"
+            android:inputType="textPersonName"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@+id/button_group_added"
+            app:layout_constraintEnd_toStartOf="@+id/edit_text_add_pupil_name"
+            app:layout_constraintStart_toStartOf="@+id/recycler_groupmembers" />
+
+        <Button
+            android:id="@+id/button_add_pupil"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@color/colorPrimary"
+            android:text="+"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_text_add_pupil_name"
+            app:layout_constraintEnd_toEndOf="@+id/recycler_groupmembers"
+            app:layout_constraintStart_toEndOf="@+id/edit_text_add_pupil_name"
+            app:layout_constraintTop_toTopOf="@+id/edit_text_add_pupil_name" />
+
+        <Button
+            android:id="@+id/button_group_added"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimary"
+            android:padding="16dp"
+            android:text="verder"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:onClick="@{() -> addGroupViewModel.onclickedNext()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/edit_text_add_pupil_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Naam"
+            android:inputType="textPersonName"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_pupil"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/edit_text_add_pupil"
+            app:layout_constraintTop_toTopOf="@+id/edit_text_add_pupil" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

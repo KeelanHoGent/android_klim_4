@@ -10,6 +10,7 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
 </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/shopping_cart_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,11 +22,11 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:textAlignment="center"
             android:textSize="21dp"
             android:textStyle="bold"
-            app:projectBudgetBinding="@{webshopViewModel.group.project.projectBudget}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:projectBudgetBinding="@{webshopViewModel.group.project.projectBudget}"
             tools:text="Winkelmandje -  budget: 100 munten" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -35,38 +36,68 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/order_cost"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/klimaatscore_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cart_text"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:listDataOrderPreview="@{webshopViewModel.group.order.orderItems}"
             tools:itemCount="3"
-            tools:listitem="@layout/order_preview_list_item"/>
+            tools:listitem="@layout/order_preview_list_item" />
+
+        <LinearLayout
+            android:id="@+id/klimaatscore_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/complete_order_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:orderTotalScoreBinding="@{webshopViewModel.totaleKlimaatScore}" />
 
         <TextView
             android:id="@+id/order_cost"
-            android:layout_width="0dp"
+            android:layout_width="206dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:padding="8dp"
-            app:groupSpentBinding="@{webshopViewModel.group.order.totalOrderPrice}"
             android:textAlignment="center"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/complete_order_button"
+            app:groupSpentBinding="@{webshopViewModel.group.order.totalOrderPrice}"
+            app:layout_constraintBottom_toBottomOf="@+id/klimaatscore_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Totaal: €123"/>
+            app:layout_constraintTop_toTopOf="@+id/klimaatscore_layout"
+            app:layout_constraintWidth_percent="0.5"
+            tools:text="Totaal: €123" />
 
         <Button
             android:id="@+id/complete_order_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="?attr/colorButtonNormal"
             android:text="@string/complete_order"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_empty_shopping_cart" />
+
+        <Button
+            android:id="@+id/btn_empty_shopping_cart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/colorPrimary"
+            android:padding="5dp"
+            android:text="@string/leeg_karretje"
+            android:textColor="@color/white"
+            android:onClick="@{() -> webshopViewModel.onClickDeleteAll()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/complete_order_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 

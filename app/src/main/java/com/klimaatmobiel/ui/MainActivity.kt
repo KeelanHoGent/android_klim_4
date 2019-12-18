@@ -3,13 +3,18 @@ package com.klimaatmobiel.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.ActivityMainBinding
 import com.klimaatmobiel.ui.fragments.ShoppingCartFragment
 import com.klimaatmobiel.ui.fragments.WebshopFragment
+import com.klimaatmobiel.ui.viewModels.ProductDetailViewModel
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.GlobalContext.get
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
@@ -17,9 +22,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         //setContentView(R.layout.activity_main)
+        startKoin {
+            androidLogger()
+            androidContext(this@MainActivity)
+            modules(appViewModelModule)
+
+
+        }
+
     }
 
     fun setToolbarTitle(titleString : String){
@@ -31,19 +43,7 @@ class MainActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-    fun triggerWebshopBottomNavigation(menuItem : MenuItem) {
-        var fragment : Fragment = WebshopFragment()
-        when(menuItem.itemId){
-            R.id.nav_order -> {
 
-                fragment = ShoppingCartFragment()
-            }
-            R.id.nav_webshop -> {
-                fragment = WebshopFragment()
-            }
-        }
-        supportFragmentManager.beginTransaction().replace(R.id.bottom_navigation_container, fragment).commit()
-    }
 
     /**
      * Decide if the activity should relaunch (logout current user and reset the app) or to navigate the backstack.
@@ -57,5 +57,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 }

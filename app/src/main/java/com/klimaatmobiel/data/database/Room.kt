@@ -1,8 +1,8 @@
 package com.klimaatmobiel.data.database
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.klimaatmobiel.data.converter.Converters
 
 @Dao
 interface ProductDao {
@@ -13,21 +13,22 @@ interface ProductDao {
     fun insertAll(products: List<DatabaseProduct>)
 }
 
-@Database(entities = [DatabaseProduct::class], version = 1, exportSchema = false)
-abstract class ProductsDatabase : RoomDatabase() {
+@Dao
+interface ProjectDao {
+    @Query("SELECT * FROM databaseproject WHERE projectId = :projectkey")
+    fun getProject(projectkey: Long): DatabaseProject
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(project: DatabaseProject)
+
+}
+
+@Database(entities = [DatabaseProduct::class, DatabaseProject::class], version = 3, exportSchema = false)
+@TypeConverters(Converters::class)
+abstract class WebshopDatabase : RoomDatabase() {
     abstract val productDao: ProductDao
+    abstract val projectDao: ProjectDao
 }
 
-private lateinit var INSTANCE: ProductsDatabase
 
-fun getDatabase(context: Context): ProductsDatabase {
-    synchronized(ProductsDatabase::class.java) {
-        if (!::INSTANCE.isInitialized) {
-            INSTANCE = Room.databaseBuilder(context.applicationContext,
-                ProductsDatabase::class.java,
-                "products").build()
-        }
-    }
-    return INSTANCE
-}
 

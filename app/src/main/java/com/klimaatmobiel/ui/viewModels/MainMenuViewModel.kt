@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.klimaatmobiel.data.network.KlimaatmobielApi
+import com.klimaatmobiel.PusherApplication
 import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
@@ -19,6 +19,10 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     private val _navigateToWebshop = MutableLiveData<Group>()
     val navigateToWebshop: LiveData<Group> get() = _navigateToWebshop
 
+    private val _navigateToAddGroup = MutableLiveData<Group>()
+    val navigateToAddGroup: LiveData<Group>
+        get() = _navigateToAddGroup
+
     private val _status = MutableLiveData<KlimaatMobielApiStatus>()
     val status: LiveData<KlimaatMobielApiStatus> get() = _status
 
@@ -29,7 +33,7 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     }
 
 
-    fun onClickNavigateToWebshop(){
+    fun onClickNavigateToAddGroup(){
 
         // check for empty groupCode
         viewModelScope.launch {
@@ -39,13 +43,19 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val group = getGroupDeferred.await()
+                PusherApplication.huidigProjectId = group.projectId
+                PusherApplication.group = group
 
                 // Filter list by categoryname
                 group.project.products.toMutableList().sortBy { it.category!!.categoryName }
 
-                _navigateToWebshop.value = group
+
+                _navigateToAddGroup.value = group
+
+                repository.refreshProject(group.project)
 
                 repository.refreshProducts(group.project.products)
+
 
                 _status.value = KlimaatMobielApiStatus.DONE
 
