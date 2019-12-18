@@ -263,4 +263,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         super.onCleared()
         viewModelScope.cancel()
     }
+
+    fun clearShoppingCart() {
+        viewModelScope.launch {
+            val removeAllOrdersDeffered = repository.removeAllOrderItems(group.value!!.order.orderId)
+        }
+    }
 }
