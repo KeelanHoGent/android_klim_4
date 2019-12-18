@@ -30,16 +30,5 @@ abstract class WebshopDatabase : RoomDatabase() {
     abstract val projectDao: ProjectDao
 }
 
-private lateinit var INSTANCE: WebshopDatabase
 
-fun getDatabase(context: Context): WebshopDatabase {
-    synchronized(WebshopDatabase::class.java) {
-        if (!::INSTANCE.isInitialized) {
-            INSTANCE = Room.databaseBuilder(context.applicationContext,
-                WebshopDatabase::class.java,
-                "webshop").fallbackToDestructiveMigration().build()
-        }
-    }
-    return INSTANCE
-}
 

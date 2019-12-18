@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.klimaatmobiel.PusherApplication
 import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
@@ -269,6 +270,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
             }
             1 -> {
+                PusherApplication.huidigProductId = product.productId
                 _navigateToProductDetail.value = listOf(product.projectId, product.productId)
                 Timber.i("productid: ${product.projectId} and ${product.productId}")
             }

@@ -14,19 +14,13 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
 // launch backend as http -- line 39 properties "applicationUrl": "http://localhost:5000"
-private const val BASE_URL = "http://10.0.2.2:5000/api/"
+
 //private const val BASE_URL = "https://klimaatmobiel.daandedecker.com/api/"
 
 
-private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
-    .build()
 
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
-    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-    .baseUrl(BASE_URL)
-    .build()
+
+
 
 
 interface KlimaatmobielApiService {
@@ -64,9 +58,10 @@ interface KlimaatmobielApiService {
     @PUT("group/changePupils/{groupId}")
     fun changePupils(@Body dto: Group, @Path("groupId")groupId: Long): Deferred<Group>
 }
-
+/*
 object KlimaatmobielApi {
     val retrofitService: KlimaatmobielApiService by lazy {
         retrofit.create(KlimaatmobielApiService::class.java)
     }
 }
+*/

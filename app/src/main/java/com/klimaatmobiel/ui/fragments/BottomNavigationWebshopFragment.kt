@@ -6,33 +6,24 @@ import android.view.*
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 
 import com.example.projecten3android.R
-import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 import com.example.projecten3android.databinding.FragmentBottomNavigationWebshopBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.klimaatmobiel.data.database.getDatabase
-import com.klimaatmobiel.data.network.KlimaatmobielApi
-import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.ui.MainActivity
-import android.widget.TextView
-import androidx.core.view.isVisible
 import android.view.LayoutInflater
-import androidx.databinding.ViewDataBinding
 import com.google.android.material.badge.BadgeDrawable
 import timber.log.Timber
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
 /**
  * A simple [Fragment] subclass.
  */
 class BottomNavigationWebshopFragment : Fragment() {
-    private lateinit var viewModel: WebshopViewModel
-
-
+    private val viewModel: WebshopViewModel by sharedViewModel()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,16 +37,7 @@ class BottomNavigationWebshopFragment : Fragment() {
         (activity as MainActivity).setToolbarTitle("Klimaatmobiel" + " - " + group.groupName + " - " + group.project.projectName)
         (activity as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-
-
-        val apiService = KlimaatmobielApi.retrofitService
-
-        viewModel = activity?.run {
-            ViewModelProviders.of(this, WebshopViewModelFactory(group, KlimaatmobielRepository(apiService, getDatabase(context!!.applicationContext))))[WebshopViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
         binding.viewModel = viewModel
-
-
 
         binding.bottomNavigationWebshop.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener {
             triggerWebshopBottomNavigation(it)
