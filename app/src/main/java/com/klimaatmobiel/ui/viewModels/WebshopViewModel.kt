@@ -276,6 +276,9 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
                 _group.value!!.order.orderItems.removeAll(_group.value!!.order.orderItems)
 
+                // trigger verandering in winkelmandje
+                _group.value = _group.value
+
                 _deleteClicked.value = false;
                 _status.value = KlimaatMobielApiStatus.DONE
             } catch (e: HttpException) {
