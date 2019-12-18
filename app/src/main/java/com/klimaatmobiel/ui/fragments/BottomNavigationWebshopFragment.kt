@@ -2,11 +2,9 @@ package com.klimaatmobiel.ui.fragments
 
 
 import android.os.Bundle
+import android.view.*
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 
@@ -14,8 +12,17 @@ import com.example.projecten3android.R
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 import com.example.projecten3android.databinding.FragmentBottomNavigationWebshopBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.klimaatmobiel.data.database.getDatabase
+import com.klimaatmobiel.data.network.KlimaatmobielApi
+import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.PusherApplication
 import com.klimaatmobiel.ui.MainActivity
+import android.widget.TextView
+import androidx.core.view.isVisible
+import android.view.LayoutInflater
+import androidx.databinding.ViewDataBinding
+import com.google.android.material.badge.BadgeDrawable
+import timber.log.Timber
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
@@ -23,7 +30,6 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
  * A simple [Fragment] subclass.
  */
 class BottomNavigationWebshopFragment : Fragment() {
-
     private val viewModel: WebshopViewModel by sharedViewModel()
 
 
@@ -44,6 +50,7 @@ class BottomNavigationWebshopFragment : Fragment() {
             triggerWebshopBottomNavigation(it)
             true
         })
+
         //standaard navigatie als app worst opgestart voor de eerste keer
         if(savedInstanceState == null){
             binding.bottomNavigationWebshop.selectedItemId = R.id.nav_webshop
@@ -61,13 +68,23 @@ class BottomNavigationWebshopFragment : Fragment() {
                 viewModel.onProductDetailNavigated()
             }
         })
+        binding.bottomNavigationWebshop
+
+        viewModel.aantalItemsInOrder.observe(this, Observer {
+            if(it != null){
+
+                updateBadge(binding.bottomNavigationWebshop)
+                Timber.i("ik raak hier")
+            }
+        })
 
 
-
-
-        //binding.bottomNavigationWebshop. getOrCreateBadge(R.id.nav_order).number = PusherApplication.aantalProductenInOrder
-        PusherApplication.aantalProductenInOrder = 8
         return binding.root
+    }
+    fun updateBadge(bottomNavigationWebshop: BottomNavigationView){
+        var aantal = viewModel.getAantalItemsOrder()
+        val badge : BadgeDrawable = bottomNavigationWebshop.getOrCreateBadge(R.id.nav_order)!!.apply { number = aantal}
+
     }
 
     fun triggerWebshopBottomNavigation(menuItem : MenuItem) {

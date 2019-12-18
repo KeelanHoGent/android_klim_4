@@ -8,8 +8,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -29,6 +33,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 class WebshopFragment : Fragment() {
 
 
+
     private val viewModel: WebshopViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,7 +47,26 @@ class WebshopFragment : Fragment() {
         binding.webshopViewModel = viewModel
 
         val adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
-            product, action ->  viewModel.onProductClicked(product, action)
+            product, action ->
+            run {
+
+                viewModel.onProductClicked(product, action)
+                if(action == 0){
+                    Snackbar.make(
+                        activity!!.findViewById(android.R.id.content),
+                        "Product toegevoegd",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+
+                    // werkt nog niet
+                    var anim = AnimationUtils.loadAnimation(context, R.anim.enlarge)
+                    var img = activity!!.findViewById<ImageView>(R.id.add_to_cart_image)
+                    img.startAnimation(anim)
+                }
+
+
+
+            }
         })
 
         viewModel.status.observe(this, Observer {
