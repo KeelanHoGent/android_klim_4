@@ -47,8 +47,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     val aantalItemsInOrder: LiveData<Int> get() = _aantalItemsInOrder
 
 
-
-
     init {
         _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
@@ -229,7 +227,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
-
     }
 
     fun removeOrderItem(oi : OrderItem){
@@ -287,5 +284,26 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
+    }
+
+    fun confirmOrder(){
+        viewModelScope.launch {
+            //val confirmOrderDeferred = repository.confirmOrder(group.value!!.order.orderId)
+            try {
+                _status.value = KlimaatMobielApiStatus.LOADING
+              //  val orderRes = confirmOrderDeferred.await()
+
+
+                _status.value = KlimaatMobielApiStatus.DONE
+
+
+            }catch (e: HttpException) {
+                Timber.i(e.message())
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+            catch (e: Exception) {
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+        }
     }
 }
