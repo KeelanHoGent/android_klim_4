@@ -326,12 +326,13 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     fun confirmOrder(){
         viewModelScope.launch {
-            //val confirmOrderDeferred = repository.confirmOrder(group.value!!.order.orderId)
+            val confirmOrderDeferred = repository.confirmOrder(group.value!!.order.orderId)
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
-              //  val orderRes = confirmOrderDeferred.await()
+                val orderRes = confirmOrderDeferred.await()
+                _group.value!!.order.submitted = true
 
-
+                _group.value = _group.value
                 _status.value = KlimaatMobielApiStatus.DONE
 
 
