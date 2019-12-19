@@ -2,6 +2,7 @@ package com.klimaatmobiel.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.GridListHeaderBinding
 import com.example.projecten3android.databinding.GridListItemBinding
+import com.klimaatmobiel.domain.Animations
 import com.klimaatmobiel.domain.Product
 import com.klimaatmobiel.ui.bindImage
 import kotlinx.android.synthetic.main.grid_list_item.view.*
@@ -163,6 +165,9 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
     class ProductViewHolder(private var binding: GridListItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product, clickListener: OnClickListener) {
             binding.product = product
+            //binding.addToCartImage.setOnClickListener {
+            //    Animations().toggleArrow(it)
+            //}
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }

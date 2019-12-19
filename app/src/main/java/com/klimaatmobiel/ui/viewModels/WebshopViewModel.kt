@@ -1,14 +1,18 @@
 package com.klimaatmobiel.ui.viewModels
 
+import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.klimaatmobiel.PusherApplication
 import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
+import com.klimaatmobiel.ui.fragments.ConfirmDeletionDialogFragment
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import timber.log.Timber
@@ -42,6 +46,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private val _totaleKlimaatScore = MutableLiveData<Int>()
     val totaleKlimaatScore: LiveData<Int> get() = _totaleKlimaatScore
 
+    private val _deleteClicked = MutableLiveData<Boolean>()
+    val deleteClicked: LiveData<Boolean> get() = _deleteClicked
 
     private val _aantalItemsInOrder = MutableLiveData<Int>()
     val aantalItemsInOrder: LiveData<Int> get() = _aantalItemsInOrder
@@ -50,6 +56,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     init {
         _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
+        _totaleKlimaatScore.value = group.order.avgScore.toInt()
 
         setAantal()
         loadProject(group.projectId)
@@ -107,8 +114,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                     posToRefreshInOrderPreviewListItem = -1
                     _group.value!!.order.orderItems.add(orderItemRes.removedOrAddedOrderItem)
                 }
-
-
 
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
@@ -217,7 +222,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 setAantal()
                 _status.value = KlimaatMobielApiStatus.DONE
 
-
             }catch (e: HttpException) {
                 Timber.i(e.message())
                 _status.value = KlimaatMobielApiStatus.ERROR
@@ -248,7 +252,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 setAantal()
                 _status.value = KlimaatMobielApiStatus.DONE
 
-
             }catch (e: HttpException) {
                 Timber.i(e.message())
                 _status.value = KlimaatMobielApiStatus.ERROR
@@ -262,10 +265,11 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     fun onProductClicked(product: Product, action: Int) {
         when(action) {
             0 -> {
+                //Animations().toggleArrow(view);
                 addProductToOrder(product)
-
             }
             1 -> {
+                PusherApplication.huidigProductId = product.productId
                 _navigateToProductDetail.value = listOf(product.projectId, product.productId)
                 Timber.i("productid: ${product.projectId} and ${product.productId}")
             }
@@ -284,6 +288,40 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
+    }
+
+    fun clearShoppingCart() {
+        viewModelScope.launch {
+            val removeAllOrdersDefered = repository.removeAllOrderItems(group.value!!.order.orderId)
+            try {
+                _status.value = KlimaatMobielApiStatus.LOADING
+                val newOrder = removeAllOrdersDefered.await()
+
+                _group.value!!.order.orderItems.removeAll(_group.value!!.order.orderItems)
+
+                // trigger verandering in winkelmandje
+                _group.value = _group.value
+                _totaleKlimaatScore.value = 0
+
+                setAantal()
+                _deleteClicked.value = false;
+                _status.value = KlimaatMobielApiStatus.DONE
+            } catch (e: HttpException) {
+                Timber.i(e.message())
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+            catch (e: Exception) {
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+        }
+    }
+
+    fun onClickDeleteAll() {
+        _deleteClicked.value = true;
+    }
+
+    fun onDeletedOrCancelled() {
+        _deleteClicked.value = false;
     }
 
     fun confirmOrder(){
