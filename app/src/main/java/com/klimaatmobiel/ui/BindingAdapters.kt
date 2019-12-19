@@ -221,3 +221,16 @@ fun bindStatus(statusImageView: ImageView, status: KlimaatMobielApiStatus?) {
         }
     }
 }
+
+@BindingAdapter("orderStatusBinding")
+fun bindOrderStatus(orderStatusTextView: TextView, status: Boolean?) {
+    val statusText: String
+    if(status != null) {
+        when(status){
+            true -> statusText =  "Ingediend"
+            false -> statusText = "Bestelling bezig"
+        }
+
+        orderStatusTextView.text = statusText
+    }
+}
