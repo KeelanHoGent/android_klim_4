@@ -210,6 +210,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!
                     .amount = orderItemRes.removedOrAddedOrderItem.amount
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.submitted = false
 
                 posToRefreshInOrderPreviewListItem = _group.value!!.order.orderItems
                     .indexOf(_group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId))
@@ -243,6 +244,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
                 _group.value!!.order.orderItems.remove( _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!)
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.submitted = false
 
                 posToRefreshInOrderPreviewListItem = -1
 
