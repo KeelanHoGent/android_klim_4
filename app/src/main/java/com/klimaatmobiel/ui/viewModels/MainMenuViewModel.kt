@@ -1,5 +1,9 @@
 package com.klimaatmobiel.ui.viewModels
 
+import android.accounts.NetworkErrorException
+import android.net.ConnectivityManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +15,7 @@ import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import timber.log.Timber
+import java.net.ConnectException
 
 class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewModel() {
 
@@ -26,6 +31,8 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     private val _status = MutableLiveData<KlimaatMobielApiStatus>()
     val status: LiveData<KlimaatMobielApiStatus> get() = _status
 
+    var customErrorMessage = ""
+
 
     init {
         // For testing purposes
@@ -33,44 +40,56 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun onClickNavigateToAddGroup(){
 
         // check for empty groupCode
-        viewModelScope.launch {
+        if(groupCode.value.isNullOrEmpty()){
+            customErrorMessage = "Vul de groepscode in"
+            _status.value = KlimaatMobielApiStatus.ERROR
+        }
+        else {
+            viewModelScope.launch {
 
-            //var getGroupDeferred = repository.getFullGroup("212345")
-            var getGroupDeferred = repository.getFullGroup(groupCode.value ?: "")
-            try {
-                _status.value = KlimaatMobielApiStatus.LOADING
-                val group = getGroupDeferred.await()
-                PusherApplication.huidigProjectId = group.projectId
-                PusherApplication.group = group
+                //var getGroupDeferred = repository.getFullGroup("212345")
+                var getGroupDeferred = repository.getFullGroup(groupCode.value ?: "")
+                try {
+                    _status.value = KlimaatMobielApiStatus.LOADING
+                    val group = getGroupDeferred.await()
+                    PusherApplication.huidigProjectId = group.projectId
+                    PusherApplication.group = group
 
-                // Filter list by categoryname
-                group.project.products.toMutableList().sortBy { it.category!!.categoryName }
-
-
-                _navigateToAddGroup.value = group
-
-                repository.refreshProject(group.project)
-
-                repository.refreshProducts(group.project.products)
+                    // Filter list by categoryname
+                    group.project.products.toMutableList().sortBy { it.category!!.categoryName }
 
 
-                _status.value = KlimaatMobielApiStatus.DONE
+                    _navigateToAddGroup.value = group
 
-            }catch (e: HttpException) {
-                Timber.i(e.message())
-                _status.value = KlimaatMobielApiStatus.ERROR
-            }
-            catch (e: Exception) {
-                Timber.i(e.message)
-                _status.value = KlimaatMobielApiStatus.ERROR
+                    repository.refreshProject(group.project)
+
+                    repository.refreshProducts(group.project.products)
+
+
+                    _status.value = KlimaatMobielApiStatus.DONE
+
+                } catch (e: HttpException) {
+                    if (e.code() == 404)
+                        customErrorMessage = "Groep niet gevonden!"
+                    else
+                        customErrorMessage = "Er ging iets fout!"
+                    _status.value = KlimaatMobielApiStatus.ERROR
+                } catch (e: ConnectException) {
+                    customErrorMessage = "Er is geen internet! probeer later opnieuw"
+                    _status.value = KlimaatMobielApiStatus.ERROR
+                } catch (e: Exception) {
+                    customErrorMessage = e.message!!
+                    _status.value = KlimaatMobielApiStatus.ERROR
+                }
             }
         }
     }
 
-    fun onWebshopNavigated() {
+    fun onAddGroupNavigated() {
         _navigateToWebshop.value = null
     }
 
