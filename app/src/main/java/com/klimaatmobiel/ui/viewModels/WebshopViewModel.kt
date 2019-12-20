@@ -300,6 +300,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 val newOrder = removeAllOrdersDefered.await()
 
                 _group.value!!.order.orderItems.removeAll(_group.value!!.order.orderItems)
+                _group.value!!.order.submitted = false
 
                 // trigger verandering in winkelmandje
                 _group.value = _group.value
