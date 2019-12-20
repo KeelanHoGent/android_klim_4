@@ -78,6 +78,7 @@ class BottomNavigationWebshopFragment : Fragment() {
     fun updateBadge(bottomNavigationWebshop: BottomNavigationView){
         var aantal = viewModel.getAantalItemsOrder()
         val badge : BadgeDrawable = bottomNavigationWebshop.getOrCreateBadge(R.id.nav_order)!!.apply { number = aantal}
+        
 
     }
 
