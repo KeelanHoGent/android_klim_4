@@ -9,124 +9,122 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 </data>
 
 
-<androidx.cardview.widget.CardView
-    style="@style/CardView.Light"
-    android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:layout_margin="5dp">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
+        style="@style/CardView.Light"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:padding="8dp">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:padding="8dp">
 
 
-        <ImageView
-            android:id="@+id/product_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/product_image_description"
-            android:scaleType="centerCrop"
+            <ImageView
+                android:id="@+id/product_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/product_image_description"
+                android:scaleType="centerCrop"
 
-            app:imageUrl="@{orderItem.product.productImage}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="H,9:16"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@android:color/darker_gray" />
+                app:imageUrl="@{orderItem.product.productImage}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="H,9:16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:srcCompat="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/product_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:textColor="@color/colorBlack"
-            android:textSize="22dp"
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/titels"
 
-            app:layout_constraintEnd_toStartOf="@+id/cart_remove_order_item"
-            app:layout_constraintStart_toEndOf="@+id/product_image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:productNameBinding="@{orderItem.product.productName}"
-            tools:text="Hout" />
-
-
-
-        <ImageView
-            android:id="@+id/cart_remove_order_item"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_remove_shopping_cart_red_40dp" />
-
-        <TextView
-            android:id="@+id/total_order_item_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="19dp"
-            android:textColor="@color/colorBlack"
-
-            app:orderItemTotalPriceBinding="@{orderItem}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="€20"/>
-
-        <TextView
-            android:id="@+id/product_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="TextView"
-            android:textSize="15dp"
-
-            app:layout_constraintStart_toEndOf="@+id/product_image"
-            app:layout_constraintTop_toBottomOf="@+id/product_name"
-            app:productPriceBinding="@{orderItem.product.price}"
-            tools:text="Prijs: €20" />
-
-        <TextView
-            android:id="@+id/order_item_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
-            android:textSize="20dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="4dp"
-
-            app:layout_constraintBottom_toBottomOf="@+id/product_image"
-            app:layout_constraintStart_toEndOf="@+id/btn_minus"
-            app:layout_constraintTop_toBottomOf="@+id/product_price"
-            app:orderItemAmountBinding="@{orderItem.amount}"
-            tools:text="3" />
-
-        <ImageButton
-            android:id="@+id/btn_minus"
-            android:background="@android:color/transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-          android:layout_marginLeft="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/product_image"
-            app:layout_constraintStart_toEndOf="@+id/product_image"
-            app:layout_constraintTop_toBottomOf="@+id/product_price"
-            app:srcCompat="@drawable/icons8_minus_48" />
-
-        <ImageButton
-            android:id="@+id/btn_plus"
-            android:background="@android:color/transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginLeft="4dp"
-            app:layout_constraintBottom_toBottomOf="@+id/product_image"
-            app:layout_constraintStart_toEndOf="@+id/order_item_amount"
-            app:layout_constraintTop_toBottomOf="@+id/product_price"
-            app:srcCompat="@drawable/ic_add_green_40dp" />
+                app:layout_constraintEnd_toStartOf="@+id/cart_remove_order_item"
+                app:layout_constraintStart_toEndOf="@+id/product_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:productNameBinding="@{orderItem.product.productName}"
+                tools:text="Hout" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/cart_remove_order_item"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_remove_shopping_cart_red_40dp" />
 
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/total_order_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_regular"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:orderItemTotalPriceBinding="@{orderItem}"
+                tools:text="€20" />
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="@dimen/text_size_regular"
+                app:layout_constraintStart_toEndOf="@+id/product_image"
+                app:layout_constraintTop_toBottomOf="@+id/product_name"
+                app:productPriceBinding="@{orderItem.product.price}"
+                tools:text="Prijs: €20" />
+
+            <TextView
+                android:id="@+id/order_item_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="4dp"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_regular"
+                app:layout_constraintBottom_toBottomOf="@+id/product_image"
+                app:layout_constraintStart_toEndOf="@+id/btn_minus"
+                app:layout_constraintTop_toBottomOf="@+id/product_price"
+                app:orderItemAmountBinding="@{orderItem.amount}"
+                tools:text="3" />
+
+            <ImageButton
+                android:id="@+id/btn_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="8dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/substractOne"
+                app:layout_constraintBottom_toBottomOf="@+id/product_image"
+                app:layout_constraintStart_toEndOf="@+id/product_image"
+                app:layout_constraintTop_toBottomOf="@+id/product_price"
+                app:srcCompat="@drawable/icons8_minus_48" />
+
+            <ImageButton
+                android:id="@+id/btn_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="4dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/addOne"
+                app:layout_constraintBottom_toBottomOf="@+id/product_image"
+                app:layout_constraintStart_toEndOf="@+id/order_item_amount"
+                app:layout_constraintTop_toBottomOf="@+id/product_price"
+                app:srcCompat="@drawable/ic_add_green_40dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 
