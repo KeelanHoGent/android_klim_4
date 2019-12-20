@@ -1,11 +1,14 @@
 package com.example.projecten3android
 
+import android.content.pm.ActivityInfo
 import android.os.SystemClock
+import android.widget.TextView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
@@ -19,7 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class WebshopTests {
+class ProducctDetailTests {
 
     @get:Rule
     var mActivityTestRule: ActivityTestRule<MainActivity>
@@ -32,31 +35,35 @@ class WebshopTests {
         mainMenuButton.perform(click())
 
         Espresso.closeSoftKeyboard()
-        SystemClock.sleep(10000)
+        SystemClock.sleep(1000)
 
 
         val webshopButton = onView(withId(R.id.button_group_added))
         webshopButton.perform(click())
+
     }
 
     @Test
-    fun FilterOnProductName() {
-        SystemClock.sleep(3000)
-        val nameFilterText = onView(withId(R.id.filter_text))
+    fun DisplayProductDetailInfo() {
+        SystemClock.sleep(1000)
 
-        val tobeTyped = "Pla"
-        nameFilterText.perform(replaceText(tobeTyped), closeSoftKeyboard())
 
-        val filterName = onView(withId(R.id.filter_text))
-        filterName.perform(replaceText("pla"), closeSoftKeyboard())
 
         val textView1 = onView(  allOf(
             withId(R.id.info_text), withText("Plastiek")))
-        val textView2 = onView(  allOf(
-            withId(R.id.info_text), withText("Plakband")))
+        textView1.perform(click())
 
-        textView1.check(ViewAssertions.matches(withText(startsWith(tobeTyped))))
-        textView2.check(ViewAssertions.matches(withText(startsWith(tobeTyped))))
+        onView(withId(R.id.detail_name_text)).check(matches(withText(startsWith("Plastiek"))))
+
+    }
+    @Test
+    fun DisplayProductDetailInfoAfterRotation() {
+        SystemClock.sleep(1000)
+        val textView1 = onView(  allOf(
+            withId(R.id.info_text), withText("Plastiek")))
+        textView1.perform(click())
+        SystemClock.sleep(2000)
+        onView(withId(R.id.detail_name_text)).check(matches(withText(startsWith("Plastiek"))))
 
     }
 
