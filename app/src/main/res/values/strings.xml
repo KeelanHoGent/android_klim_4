@@ -37,5 +37,6 @@
     <string name="Further">verder</string>
     <string name="addOne">Add one</string>
     <string name="substractOne">Verminder eentje</string>
+    <string name="hello">Hallo!</string>
 
 </resources>

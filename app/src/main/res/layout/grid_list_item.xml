@@ -41,9 +41,8 @@
                 android:contentDescription="@string/product_image_description" />
 
             <TextView
+                style="@style/product_card_title_style"
                 android:id="@+id/info_text"
-                android:textSize="@dimen/text_size_regular"
-                android:textAlignment="viewStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:productNameBinding="@{product.productName}"
