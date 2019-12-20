@@ -31,7 +31,7 @@ class ProjectDetailTests {
     @Before
     fun setUp() {
         // navigate from main menu to group menu
-        val mainMenuButton = onView(withId(R.id.webshop_button))
+        val mainMenuButton = onView(withId(R.id.webshop_button)).perform(typeText("212345"))
         mainMenuButton.perform(click())
 
         Espresso.closeSoftKeyboard()

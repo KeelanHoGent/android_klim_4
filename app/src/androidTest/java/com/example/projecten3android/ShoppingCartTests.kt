@@ -29,7 +29,7 @@ class ShoppingCartTests {
     @Before
     fun setUp() {
         // navigate from main menu to group menu
-        val mainMenuButton = onView(withId(R.id.webshop_button))
+        val mainMenuButton = onView(withId(R.id.webshop_button)).perform(typeText("212345"))
         mainMenuButton.perform(click())
 
         Espresso.closeSoftKeyboard()
@@ -158,20 +158,51 @@ class ShoppingCartTests {
 
     }
 
-    // USERSTORY:
-    // Als een leerling wil ik de volledige winkelmand verwijderen
-    // zodat ik snel opnieuw kan beginnen
-    @Test
-    fun CheckNumberBadge() {
 
+    //USERSTORY:
+    //Als een leerling
+    //Wil ik een bestelling doorgeven
+    //Zodat ik de producten kan afhalen
+    @Test
+    fun confirmOrder() {
         onView(allOf(withId(R.id.add_to_cart_image),hasSibling(withText("Plastiek"))))
             .perform(click());
         onView(allOf(withId(R.id.add_to_cart_image),hasSibling(withText("Plakband"))))
             .perform(click());
 
 
+        onView(withId(R.id.order_status_text)).check(matches(withText("Bestelling bezig")))
+        onView(withId(R.id.complete_order_button)).perform(click())
+        onView(withId(R.id.order_status_text)).check(matches(withText("Ingediend")))
 
     }
+
+    //USERSTORY:
+    //Als een leerling wil ik een ingediend winkelkarretje aanpassen
+    // zodat ik producten die ik vergeten ben nog kan toevoegen
+    @Test
+    fun resumeOrder() {
+        onView(allOf(withId(R.id.add_to_cart_image),hasSibling(withText("Plastiek"))))
+            .perform(click());
+        onView(allOf(withId(R.id.add_to_cart_image),hasSibling(withText("Plakband"))))
+            .perform(click());
+
+        val toShoppingCardButton = onView((withId(R.id.nav_order)))
+        toShoppingCardButton.perform(click())
+
+        onView(withId(R.id.order_status_text)).check(matches(withText("Bestelling bezig")))
+        onView(withId(R.id.complete_order_button)).perform(click())
+        onView(withId(R.id.order_status_text)).check(matches(withText("Ingediend")))
+
+        val toWebShopButton = onView((withId(R.id.nav_webshop)))
+        toWebShopButton.perform(click())
+        onView(allOf(withId(R.id.add_to_cart_image),hasSibling(withText("Plastiek"))))
+            .perform(click());
+
+        toShoppingCardButton.perform(click())
+        onView(withId(R.id.order_status_text)).check(matches(withText("Bestelling bezig")))
+    }
+
 
 
 
