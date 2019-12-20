@@ -34,7 +34,7 @@ class NavigationTests {
     @Test
     fun navigateThroughApp() {
         // navigate from main menu to group menu
-        val mainMenuButton = onView(withId(R.id.webshop_button))
+        val mainMenuButton = onView(withId(R.id.webshop_button)).perform(ViewActions.typeText("212345"))
         mainMenuButton.perform(click())
 
         SystemClock.sleep(10000)
