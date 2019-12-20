@@ -31,5 +31,9 @@
     <string name="toepassingsgebied_text">Toepassingsgebied</string>
     <string name="beschrijving_text">Beschrijving</string>
     <string name="leeg_karretje">leeg karretje</string>
+    <string name="firstName">Voornaam</string>
+    <string name="surName">Achternaam</string>
+    <string name="plusSign">+</string>
+    <string name="Further">verder</string>
 
 </resources>

@@ -21,12 +21,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="Hallo!"
-            android:textSize="36sp"
+            android:textSize="@dimen/titels"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+
             android:id="@+id/text_group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +37,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="@{addGroupViewModel.group.groupName}"
-            android:textSize="36sp"
+            android:textSize="@dimen/titels"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_hallo" />
@@ -56,54 +57,53 @@
             tools:listitem="@layout/list_groupmember_item" />
 
         <EditText
+            style="@style/edit_text_style"
             android:id="@+id/edit_text_add_pupil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"
             android:ems="10"
-            android:hint="Voornaam"
+            android:hint="@string/firstName"
             android:inputType="textPersonName"
-            android:textSize="32sp"
             app:layout_constraintBottom_toTopOf="@+id/button_group_added"
             app:layout_constraintEnd_toStartOf="@+id/edit_text_add_pupil_name"
             app:layout_constraintStart_toStartOf="@+id/recycler_groupmembers" />
 
         <Button
             android:id="@+id/button_add_pupil"
+            style="@style/edit_text_style"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:background="@color/colorPrimary"
-            android:text="+"
+            android:text="@string/plusSign"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="@+id/edit_text_add_pupil_name"
             app:layout_constraintEnd_toEndOf="@+id/recycler_groupmembers"
             app:layout_constraintStart_toEndOf="@+id/edit_text_add_pupil_name"
             app:layout_constraintTop_toTopOf="@+id/edit_text_add_pupil_name" />
 
         <Button
+            style="@style/red_button_style"
             android:id="@+id/button_group_added"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/button_width"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@color/colorPrimary"
             android:padding="16dp"
-            android:text="verder"
-            android:textColor="@color/white"
-            android:textSize="32sp"
+            android:text="@string/Further"
             android:onClick="@{() -> addGroupViewModel.onclickedNext()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
+            style="@style/edit_text_style"
             android:id="@+id/edit_text_add_pupil_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Naam"
+            android:hint="@string/surName"
             android:inputType="textPersonName"
-            android:textSize="32sp"
             app:layout_constraintEnd_toStartOf="@+id/button_add_pupil"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/edit_text_add_pupil"
