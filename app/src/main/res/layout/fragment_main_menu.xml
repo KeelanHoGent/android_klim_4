@@ -36,15 +36,13 @@
      />
 
         <EditText
-            style="@style/AppTheme"
             android:id="@+id/project_code_text"
-            android:layout_width="@dimen/button_width"
+            android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/edit_text_hint"
             android:inputType="textPersonName"
             android:text="@={mainMenuViewModel.groupCode}"
-            android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/webshop_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,12 +51,12 @@
 
         <Button
             android:id="@+id/webshop_button"
-            style="@style/red_button_style"
-            android:layout_width="@dimen/button_width"
+            android:layout_width="300sp"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:onClick="@{() -> mainMenuViewModel.onClickNavigateToAddGroup()}"
-            android:padding="@dimen/button_padding"
             android:text="@string/webshop_button_text"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
