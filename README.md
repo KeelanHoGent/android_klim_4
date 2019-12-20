@@ -7,14 +7,47 @@ in their STEM projects. Teachers can control and manage the webshop with the web
 
 The back-end that supports this system can be found [here](https://github.com/HoGent-Projecten3/projecten3-1920-backend-klim03)
 
+## Extra features
+These are the extra features after the split of the group
+```
+* Groups
+  * Students can change their groupsname
+  * Students can add their names to their group
+  * Students can change their name if needed
+  
+* Project detail
+  * Students can see the details of the project they are working on
+  
+* webshop
+  * Students can sort products by price, category and name
+  * Students can see the amount of products in the shopping cart throughout the whole app
+  
+* Shopping Cart
+  * Students can confirm their order
+  * Students can clear the whole shopping cart
+  
+* general
+  * When the internet drops the student is still able to see the overview of products, the details of product detail, etc
+  * They can no longer make changes to the shopping cart when internet drops
+  
+```
+
 ## Getting started
 
-These instructions will allow you to run a copy of the project on your local machine for development and testing
+Run the application together with the 'backend_klim_4' asp .net backend
+
+Codes to start
+```
+212345: Project with no group members
+1abcde: Project with group members
+```
+
 
 ### Prerequisits
 
 ```
 Android Studio
+Visual studio 2019
 ```
 
 ### Installing
