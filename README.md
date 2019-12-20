@@ -7,6 +7,16 @@ in their STEM projects. Teachers can control and manage the webshop with the web
 
 The back-end that supports this system can be found [here](https://github.com/HoGent-Projecten3/projecten3-1920-backend-klim03)
 
+## Getting started
+
+Run the application together with the 'backend_klim_4' asp .net backend
+
+GroupsCodes to login
+```
+212345: Project with no group members
+1abcde: Project with group members
+```
+
 ## Extra features
 These are the extra features after the split of the group
 ```
@@ -22,26 +32,23 @@ These are the extra features after the split of the group
   * Students can sort products by price, category and name
   * Students can see the amount of products in the shopping cart throughout the whole app
   
+*product detail
+ * Students can see the climate score of a product
+  
 * Shopping Cart
   * Students can confirm their order
   * Students can clear the whole shopping cart
+  * Climate score is calculated based on the projects in the webshop
+  * Climate score is shown with colors ranging from red to green. Red means a bad score and green a good one
+  * students can make adjustments to their order after confirming the order
   
 * general
   * When the internet drops the student is still able to see the overview of products, the details of product detail, etc
   * They can no longer make changes to the shopping cart when internet drops
+  * added dependency injection with KOIN
+  
   
 ```
-
-## Getting started
-
-Run the application together with the 'backend_klim_4' asp .net backend
-
-Codes to start
-```
-212345: Project with no group members
-1abcde: Project with group members
-```
-
 
 ### Prerequisits
 
