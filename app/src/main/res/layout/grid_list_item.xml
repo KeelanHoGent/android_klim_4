@@ -41,10 +41,8 @@
                 android:contentDescription="@string/product_image_description" />
 
             <TextView
-                style="@style/product_card_title_style"
                 android:id="@+id/info_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/product_card_title_style"
                 app:productNameBinding="@{product.productName}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +55,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/info_text"
-                android:textSize="@dimen/small_text"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_marginStart="5dp"

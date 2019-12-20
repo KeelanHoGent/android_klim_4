@@ -36,6 +36,7 @@ class MainMenuFragment : Fragment() {
             if(it != null) {
                 findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToAddGroupFragment3(it))
             }
+            viewModel.onAddGroupNavigated()
         })
 
         viewModel.status.observe(this, Observer {
@@ -43,7 +44,7 @@ class MainMenuFragment : Fragment() {
                 KlimaatMobielApiStatus.ERROR -> {
                     Snackbar.make(
                         activity!!.findViewById(android.R.id.content),
-                        getString(R.string.error_connection),
+                        viewModel.customErrorMessage,
                         Snackbar.LENGTH_LONG
                     ).show()
                 }

@@ -19,12 +19,12 @@
 
         <EditText
             android:id="@+id/input_pupil_first_name"
-            style="@style/edit_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/firstName"
+            android:hint="Voornaam"
             android:inputType="textPersonName"
+            android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/input_pupil_name"
             app:layout_constraintHorizontal_bias="0.0"
@@ -34,12 +34,12 @@
 
         <EditText
             android:id="@+id/input_pupil_name"
-            style="@style/edit_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/surName"
+            android:hint="Naam"
             android:inputType="textPersonName"
+            android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/input_pupil_first_name"

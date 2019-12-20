@@ -29,7 +29,6 @@ interface KlimaatmobielApiService {
     @GET("project/{projectCode}")
     fun getProject(@Path("projectCode") projectCode: Long): Deferred<Project>
 
-
     @PUT("order/addOrderItem/{orderId}" )
     fun addProductToOrder(@Body dto : OrderItem, @Path("orderId") orderId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
 

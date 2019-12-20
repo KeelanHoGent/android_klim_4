@@ -59,24 +59,11 @@ class AddGroupFragment : Fragment() {
 
         binding.buttonAddPupil.setOnClickListener {
 
-            try {
                 viewModel.onClickedAddPupil(binding.editTextAddPupil.text.toString(), binding.editTextAddPupilName.text.toString())
                 binding.editTextAddPupil.setText("")
                 binding.editTextAddPupilName.setText("")
                 adapter.notifyDataSetChanged()
-            }catch(e: Exception) {
-                Snackbar.make(
-                    activity!!.findViewById(android.R.id.content),
-                    "naam invullen",
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
-        }
 
-
-      /*
-        binding.buttonGroupAdded.setOnClickListener{
-            viewModel.onclickedNext()
         }
 
         viewModel.status.observe(this, Observer {
@@ -84,13 +71,13 @@ class AddGroupFragment : Fragment() {
                 KlimaatMobielApiStatus.ERROR -> {
                     Snackbar.make(
                         activity!!.findViewById(android.R.id.content),
-                        getString(R.string.error_connection),
+                        viewModel.customErrorMessage,
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
             }
         })
-        */
+
 
 
         return binding.root

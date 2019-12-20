@@ -12,13 +12,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-
-import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
 import com.google.android.material.snackbar.Snackbar
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
@@ -51,20 +46,6 @@ class WebshopFragment : Fragment() {
             run {
 
                 viewModel.onProductClicked(product, action)
-                if(action == 0){
-                    Snackbar.make(
-                        activity!!.findViewById(android.R.id.content),
-                        "Product toegevoegd",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-
-                    // werkt nog niet
-                    var anim = AnimationUtils.loadAnimation(context, R.anim.enlarge)
-                    var img = activity!!.findViewById<ImageView>(R.id.add_to_cart_image)
-                    img.startAnimation(anim)
-                }
-
-
 
             }
         })
@@ -74,7 +55,7 @@ class WebshopFragment : Fragment() {
                 KlimaatMobielApiStatus.ERROR -> {
                     Snackbar.make(
                         activity!!.findViewById(android.R.id.content),
-                        getString(R.string.project_code_error),
+                        viewModel.customErrorMessage,
                         Snackbar.LENGTH_LONG
                     ).show()
                     viewModel.onErrorShown()
@@ -111,6 +92,20 @@ class WebshopFragment : Fragment() {
                 val test = it
                 adapter.addHeaderAndSubmitList(it.project.products)
             }
+        })
+
+        viewModel.addedProduct.observe(this, Observer {
+            if(it) {
+                Snackbar.make(
+                    activity!!.findViewById(android.R.id.content),
+                    "Product toegevoegd",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+                    // werkt nog niet
+                    //var anim = AnimationUtils.loadAnimation(context, R.anim.enlarge)
+                    //var img = activity!!.findViewById<ImageView>(R.id.add_to_cart_image)
+                    //img.startAnimation(anim)
         })
 
         /**
