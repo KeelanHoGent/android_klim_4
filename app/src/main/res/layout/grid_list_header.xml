@@ -11,6 +11,7 @@
         android:id="@+id/product_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/titels"
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:categorieNameBinding="@{name}"
         android:padding="8dp" />
