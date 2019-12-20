@@ -218,6 +218,9 @@ fun bindStatus(statusImageView: ImageView, status: KlimaatMobielApiStatus?) {
             KlimaatMobielApiStatus.DONE -> {
                 statusImageView.visibility = View.GONE
             }
+            KlimaatMobielApiStatus.ERROR -> {
+                statusImageView.visibility = View.GONE
+            }
         }
     }
 }
