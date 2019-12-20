@@ -1,7 +1,5 @@
 package com.klimaatmobiel.ui.viewModels
 
-import android.view.View
-import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,11 +10,10 @@ import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.domain.enums.SortStatus
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
-import com.klimaatmobiel.ui.fragments.ConfirmDeletionDialogFragment
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import timber.log.Timber
-
+import java.net.ConnectException
 
 
 class WebshopViewModel(group: Group, private val repository: KlimaatmobielRepository) : ViewModel() {
@@ -51,6 +48,11 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     private val _aantalItemsInOrder = MutableLiveData<Int>()
     val aantalItemsInOrder: LiveData<Int> get() = _aantalItemsInOrder
+
+    var customErrorMessage = ""
+
+    private val _addedProduct = MutableLiveData<Boolean>()
+    val addedProduct: LiveData<Boolean> get() = _addedProduct
 
 
     init {
@@ -121,15 +123,24 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
                 updateKlimaatScore()
 
+                _addedProduct.value = true;
+
                 _status.value = KlimaatMobielApiStatus.DONE
                 setAantal()
-
+                _addedProduct.value = false;
             }catch (e: HttpException) {
-                Timber.i(e.message())
+                if (e.code() == 404)
+                    customErrorMessage = "Kon het product niet toevoegen"
+                else
+                    customErrorMessage = "Kon het product niet toevoegen"
                 _status.value = KlimaatMobielApiStatus.ERROR
-            }
-            catch (e: Exception) {
-                Timber.i(e)
+
+            }catch (e: ConnectException) {
+                customErrorMessage = "Er is geen internet! probeer later opnieuw"
+                _status.value = KlimaatMobielApiStatus.ERROR
+
+            } catch (e: Exception) {
+                customErrorMessage = e.message!!
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
@@ -224,11 +235,18 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _status.value = KlimaatMobielApiStatus.DONE
 
             }catch (e: HttpException) {
-                Timber.i(e.message())
+                if (e.code() == 404)
+                    customErrorMessage = "Kon het product niet aanpassen"
+                else
+                    customErrorMessage = "Kon het product niet aanpassen"
                 _status.value = KlimaatMobielApiStatus.ERROR
-            }
-            catch (e: Exception) {
-                Timber.i(e)
+
+            }catch (e: ConnectException) {
+                customErrorMessage = "Er is geen internet! probeer later opnieuw"
+                _status.value = KlimaatMobielApiStatus.ERROR
+
+            } catch (e: Exception) {
+                customErrorMessage = e.message!!
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
@@ -255,10 +273,18 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _status.value = KlimaatMobielApiStatus.DONE
 
             }catch (e: HttpException) {
-                Timber.i(e.message())
+                if (e.code() == 404)
+                    customErrorMessage = "Kon het product niet verwijderen"
+                else
+                    customErrorMessage = "Kon het product niet verwijderen"
                 _status.value = KlimaatMobielApiStatus.ERROR
-            }
-            catch (e: Exception) {
+
+            }catch (e: ConnectException) {
+                customErrorMessage = "Er is geen internet! probeer later opnieuw"
+                _status.value = KlimaatMobielApiStatus.ERROR
+
+            } catch (e: Exception) {
+                customErrorMessage = e.message!!
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
@@ -309,10 +335,18 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _deleteClicked.value = false;
                 _status.value = KlimaatMobielApiStatus.DONE
             } catch (e: HttpException) {
-                Timber.i(e.message())
+                if (e.code() == 404)
+                    customErrorMessage = "Kon de producten niet verwijderen"
+                else
+                    customErrorMessage = "Kon de producten niet verwijderen"
                 _status.value = KlimaatMobielApiStatus.ERROR
-            }
-            catch (e: Exception) {
+
+            }catch (e: ConnectException) {
+                customErrorMessage = "Er is geen internet! probeer later opnieuw"
+                _status.value = KlimaatMobielApiStatus.ERROR
+
+            } catch (e: Exception) {
+                customErrorMessage = e.message!!
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
@@ -332,17 +366,25 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val orderRes = confirmOrderDeferred.await()
-                _group.value!!.order.submitted = true
+                _group.value!!.order.submitted = orderRes.submitted
 
                 _group.value = _group.value
                 _status.value = KlimaatMobielApiStatus.DONE
 
 
             }catch (e: HttpException) {
-                Timber.i(e.message())
+                if (e.code() == 404)
+                    customErrorMessage = "Kon de bestelling niet bevestigen"
+                else
+                    customErrorMessage = "Kon de bestelling niet bevestigen"
                 _status.value = KlimaatMobielApiStatus.ERROR
-            }
-            catch (e: Exception) {
+
+            }catch (e: ConnectException) {
+                customErrorMessage = "Er is geen internet! probeer later opnieuw"
+                _status.value = KlimaatMobielApiStatus.ERROR
+
+            } catch (e: Exception) {
+                customErrorMessage = e.message!!
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
