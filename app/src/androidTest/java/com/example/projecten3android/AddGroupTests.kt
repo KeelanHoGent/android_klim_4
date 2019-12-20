@@ -21,19 +21,21 @@ import org.junit.runner.RunWith
 class AddGroupTests {
 
     @get:Rule
-    var mActivityTestRule: ActivityTestRule<MainActivity>
-            = ActivityTestRule(MainActivity::class.java)
+    var mActivityTestRule: ActivityTestRule<MainActivity> =
+        ActivityTestRule(MainActivity::class.java)
 
     @Before
     fun setUp() {
         // navigate from main menu to group menu
-        val mainMenuButton = onView(withId(R.id.webshop_button))
+        val mainMenuButton = onView(withId(R.id.webshop_button)).perform(ViewActions.typeText("212345"))
         mainMenuButton.perform(click())
 
         SystemClock.sleep(10000)
         Espresso.closeSoftKeyboard()
     }
 
+    //USER STORY
+    //Als een leerling wil ik mijn naam kunnen toevoegen aan mijn groepje zodat de leerkracht weet bij welk groepje ik hoor
     @Test
     fun AddGroupMember() {
         // add the pupil
@@ -43,13 +45,19 @@ class AddGroupTests {
         onView(withId(R.id.button_add_pupil)).perform(click())
 
         // check if is added
-        val input_first_name = onView(allOf(
-                withId(R.id.input_pupil_first_name), withText("Sofie")))
+        val input_first_name = onView(
+            allOf(
+                withId(R.id.input_pupil_first_name), withText("Sofie")
+            )
+        )
 
         input_first_name.check(matches(isDisplayed()))
 
-        val input_name = onView(allOf(
-            withId(R.id.input_pupil_name), withText("Seru")))
+        val input_name = onView(
+            allOf(
+                withId(R.id.input_pupil_name), withText("Seru")
+            )
+        )
 
         input_name.check(matches(isDisplayed()))
     }
@@ -86,7 +94,8 @@ class AddGroupTests {
         onView(withId(R.id.button_add_pupil)).perform(click())
 
         // check if is added
-        val input_first_name = onView(allOf(withId(R.id.input_pupil_first_name), withText("Florian")))
+        val input_first_name =
+            onView(allOf(withId(R.id.input_pupil_first_name), withText("Florian")))
 
         input_first_name.check(matches(isDisplayed()))
 
@@ -94,12 +103,18 @@ class AddGroupTests {
 
         input_name.check(matches(isDisplayed()))
 
-        val input_first_name2 = onView(allOf(
-            withId(R.id.input_pupil_first_name), withText("Keelan")))
+        val input_first_name2 = onView(
+            allOf(
+                withId(R.id.input_pupil_first_name), withText("Keelan")
+            )
+        )
         input_first_name2.check(matches(isDisplayed()))
 
-        val input_name2 = onView(allOf(
-            withId(R.id.input_pupil_name), withText("Savat")))
+        val input_name2 = onView(
+            allOf(
+                withId(R.id.input_pupil_name), withText("Savat")
+            )
+        )
 
         input_name2.check(matches(isDisplayed()))
     }
@@ -144,4 +159,3 @@ class AddGroupTests {
         snackBarItem.check(matches(withText("naam invullen")))
     }
 }
-

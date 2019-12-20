@@ -34,12 +34,6 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     var customErrorMessage = ""
 
 
-    init {
-        // For testing purposes
-        groupCode.value = "212345"
-    }
-
-
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun onClickNavigateToAddGroup(){
 

@@ -22,14 +22,14 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:textAlignment="center"
             android:textSize="@dimen/text_size_regular"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintEnd_toStartOf="@+id/order_status_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:projectBudgetBinding="@{webshopViewModel.group.project.projectBudget}"
             tools:text="Winkelmandje -  budget: 100 munten" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/order_status_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
