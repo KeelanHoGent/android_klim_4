@@ -22,12 +22,23 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:textAlignment="center"
             android:textSize="21dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:projectBudgetBinding="@{webshopViewModel.group.project.projectBudget}"
             tools:text="Winkelmandje -  budget: 100 munten" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="21dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:orderStatusBinding="@{webshopViewModel.group.order.submitted}"
+            tools:text="Status" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/order_preview_list"
@@ -37,7 +48,7 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/klimaatscore_layout"
+            app:layout_constraintBottom_toTopOf="@+id/order_cost"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cart_text"
@@ -79,6 +90,7 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:layout_marginBottom="4dp"
             android:background="?attr/colorButtonNormal"
             android:text="@string/complete_order"
+            android:onClick="@{() -> webshopViewModel.confirmOrder()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -100,6 +112,7 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             app:layout_constraintEnd_toStartOf="@+id/complete_order_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

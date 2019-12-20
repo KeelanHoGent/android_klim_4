@@ -15,11 +15,6 @@ import retrofit2.http.*
 //private const val BASE_URL = "https://klimaatmobiel.daandedecker.com/api/"
 
 
-
-
-
-
-
 interface KlimaatmobielApiService {
     // API CALLS HERE
 
@@ -54,6 +49,9 @@ interface KlimaatmobielApiService {
 
     @PUT("group/changePupils/{groupId}")
     fun changePupils(@Body dto: Group, @Path("groupId")groupId: Long): Deferred<Group>
+
+    @PUT("order/submitOrder/{orderId}")
+    fun confirmOrder(@Path("orderId") orderId: Long):Deferred<Order>
 
     @PUT("order/removeAllOrderItems/{orderId}")
     fun removeAllOrderItems(@Path("orderId") orderId: Long): Deferred<Order>

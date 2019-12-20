@@ -65,4 +65,8 @@ class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, p
     fun removeAllOrderItems(orderId: Long): Deferred<Order> {
         return apiService.removeAllOrderItems(orderId)
     }
+
+    fun confirmOrder(orderId: Long): Deferred<Order> {
+        return apiService.confirmOrder(orderId)
+    }
 }

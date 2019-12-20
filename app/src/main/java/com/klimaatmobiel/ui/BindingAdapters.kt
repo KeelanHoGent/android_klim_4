@@ -105,13 +105,6 @@ fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
 
     lp20.setMargins(20, 0, 20, 0)
 
-    val tv = TextView(parent.context)
-    tv.text = ("Klimaatscore: ")
-    tv.setTextColor(Color.parseColor("#C3004A"))
-    tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,40.toFloat())
-
-    parent.addView(tv)
-
     val aantalDraws = (score/2).toInt()
 
     var res: Int = 0
@@ -226,5 +219,18 @@ fun bindStatus(statusImageView: ImageView, status: KlimaatMobielApiStatus?) {
                 statusImageView.visibility = View.GONE
             }
         }
+    }
+}
+
+@BindingAdapter("orderStatusBinding")
+fun bindOrderStatus(orderStatusTextView: TextView, status: Boolean?) {
+    val statusText: String
+    if(status != null) {
+        when(status){
+            true -> statusText =  "Ingediend"
+            false -> statusText = "Bestelling bezig"
+        }
+
+        orderStatusTextView.text = statusText
     }
 }

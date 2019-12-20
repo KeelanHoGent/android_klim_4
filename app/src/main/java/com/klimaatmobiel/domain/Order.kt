@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class Order(val orderId : Long,
             val time : String,
-            val submitted : Boolean,
+            var submitted : Boolean,
             val approved : Boolean,
             var totalOrderPrice: Double,
             val groupId : Long,

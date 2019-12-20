@@ -53,8 +53,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     val aantalItemsInOrder: LiveData<Int> get() = _aantalItemsInOrder
 
 
-
-
     init {
         _group.value = group // de groep met het project en de order is hier beschikbaar
         _filteredList.value = group.project.products
@@ -212,6 +210,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!
                     .amount = orderItemRes.removedOrAddedOrderItem.amount
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.submitted = false
 
                 posToRefreshInOrderPreviewListItem = _group.value!!.order.orderItems
                     .indexOf(_group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId))
@@ -233,7 +232,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
-
     }
 
     fun removeOrderItem(oi : OrderItem){
@@ -246,6 +244,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
                 _group.value!!.order.orderItems.remove( _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!)
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.submitted = false
 
                 posToRefreshInOrderPreviewListItem = -1
 
@@ -327,5 +326,25 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         _deleteClicked.value = false;
     }
 
-}
+    fun confirmOrder(){
+        viewModelScope.launch {
+            val confirmOrderDeferred = repository.confirmOrder(group.value!!.order.orderId)
+            try {
+                _status.value = KlimaatMobielApiStatus.LOADING
+                val orderRes = confirmOrderDeferred.await()
+                _group.value!!.order.submitted = true
 
+                _group.value = _group.value
+                _status.value = KlimaatMobielApiStatus.DONE
+
+
+            }catch (e: HttpException) {
+                Timber.i(e.message())
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+            catch (e: Exception) {
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+        }
+    }
+}
